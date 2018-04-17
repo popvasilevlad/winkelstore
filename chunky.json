@@ -8,12 +8,7 @@
     "start": {
       "stack": [
         "intro",
-        "roadmap",
-        "whitepaper",
-        "story",
-        "challenges",
-        "tokens",
-        "dashboard"
+        "test"
       ]
     }
   },

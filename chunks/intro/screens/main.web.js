@@ -1,7 +1,7 @@
 import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
-import { Telegram } from '../components'
-import { Tokens } from 'chunks/dashboard/components'
+
+import Input from '../components/input'
 
 export default class MainIntroScreen extends Screen {
 
@@ -14,12 +14,17 @@ export default class MainIntroScreen extends Screen {
     super.componentDidMount()
   }
 
-  get telegram () {
-    return (<Telegram onAction={() => { this.triggerRawRedirect('https://t.me/carmelplatform') }} />)
-  }
+  // components () {
+  //   this.props.footer.sections = []
+  //   return super.components()
+  // }
 
-  components () {
-    return super.components()
-          .concat([this.telegram])
+  render () {
+    console.log('here');
+    return (
+      <Input
+        value={5}
+      />
+    )
   }
 }
