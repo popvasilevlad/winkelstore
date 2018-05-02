@@ -1,0 +1,11 @@
+{
+  "name": "intro",
+  "routes": {
+    "main": {
+      "title": "Register",
+      "icon": "register",
+      "skipExtendedMenuOnDesktop": true,
+      "path": "/register"
+    }
+  }
+}

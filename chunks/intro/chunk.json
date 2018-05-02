@@ -21,6 +21,9 @@
     },
     "login": {
         "title": "login"
+    },
+    "register": {
+        "title": "register"
     }
   }
 }

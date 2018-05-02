@@ -1,38 +1,28 @@
 import React, { PureComponent } from 'react'
 import { inputStyle } from '../styles/form.js'
-export default class Input extends PureComponent {
 
+export default class Input extends PureComponent {
   constructor(props) {
     super(props)
-    this.state= {
-      value: props.value,
-      placeholder: props.placeholder
-    }
+    this.state = props
   }
 
-  handleChange = (value) => {
-    this.setState({
-      value
-    })
+  handleChange(e) {
+      const view = this.state.view
+
+      this.state.onChange(this.state.view, e);
   }
 
   render() {
     return (
-      <div>
-      {
-        parseInt(this.state.value) === 10 ?
-          <span> bine ba ai luat 10 fmm</span>
-        :
         <div>
           <input
-          value={this.state.value}
-          placeholder={this.state.placeholder}
-          onChange={e => this.handleChange(e.target.value)}
-          style={inputStyle}
+              value={this.state.value}
+              placeholder={this.state.placeholder}
+              name={this.state.name}
+              style={inputStyle}
           />
         </div>
-      }
-      </div>
     )
   }
 }

@@ -20,18 +20,42 @@ export default class MainIntroScreen extends Screen {
             .concat([this.renderInputs])
   }
 
+  submitRegister() {
+      console.log('registerrrr');
+  }
+
 
   get renderInputs () {
       return (
           <div>
+              <Input
+                placeholder="Firstname"
+                name="firstname"
+              />
+              <Input
+                placeholder="Lastname"
+              />
               <Input
                 placeholder="E-mail"
               />
               <Input
                 placeholder="Password"
               />
-              <Button unelevated>Login</Button>
-              <div> <br/> </div>
+              <Input
+                placeholder="Business name"
+              />
+              <Input
+                placeholder="Address"
+              />
+              <Input
+                placeholder="City"
+              />
+              <Button
+                unelevated
+                onClick={this.submitRegister}
+              >
+                Register
+              </Button>
           </div>
       )
   }
