@@ -1,6 +1,7 @@
 import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
-import Input from '../components/input'
+
+import Input from '../../components/input'
 import { Button, ButtonIcon } from 'rmwc/Button';
 
 export default class MainIntroScreen extends Screen {
@@ -17,5 +18,22 @@ export default class MainIntroScreen extends Screen {
   components () {
     this.props.footer.sections = []
     return super.components()
+            .concat([this.renderInputs])
+  }
+
+
+  get renderInputs () {
+      return (
+          <div>
+              <Input
+                placeholder="E-mail"
+              />
+              <Input
+                placeholder="Parolă"
+              />
+              <Button unelevated>Login</Button>
+              <div> <br/> </div>
+          </div>
+      )
   }
 }

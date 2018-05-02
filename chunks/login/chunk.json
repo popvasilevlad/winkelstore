@@ -1,0 +1,11 @@
+{
+  "name": "intro",
+  "routes": {
+    "main": {
+      "title": "Login",
+      "icon": "login",
+      "skipExtendedMenuOnDesktop": true,
+      "path": "/login"
+    }
+  }
+}
