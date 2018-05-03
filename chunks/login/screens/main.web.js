@@ -1,6 +1,6 @@
 import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
-import Input from '../../components/input'
+import Input from '../../intro/components/input'
 import { Button, ButtonIcon } from 'rmwc/Button';
 
 export default class MainIntroScreen extends Screen {

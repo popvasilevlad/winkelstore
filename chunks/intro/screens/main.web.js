@@ -1,6 +1,5 @@
 import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
-import { Button, ButtonIcon } from 'rmwc/Button';
 
 export default class MainIntroScreen extends Screen {
 
@@ -13,8 +12,16 @@ export default class MainIntroScreen extends Screen {
     super.componentDidMount()
   }
 
+  onCloudPrimary () {
+    console.log('on cloud primary action....')
+  }
+
+  get features () {
+    return ([])
+  }
+
   components () {
-    this.props.footer.sections = []
     return super.components()
+          .concat(this.features)
   }
 }

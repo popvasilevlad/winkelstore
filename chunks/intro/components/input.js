@@ -21,7 +21,6 @@ export default class Input extends PureComponent {
               placeholder={this.state.placeholder}
               name={this.state.name}
               style={inputStyle}
-              onChange={(event) => this.props.onChangeHandler(event, this.state.name)}
           />
         </div>
     )
