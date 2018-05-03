@@ -1,5 +1,5 @@
 {
-  "name": "intro",
+  "name": "register",
   "routes": {
     "main": {
       "title": "Register",

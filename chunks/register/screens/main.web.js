@@ -50,37 +50,37 @@ export default class MainIntroScreen extends Screen {
               <Input
                 placeholder = "Firstname"
                 name = "firstname"
-                onChange = {this.handleChange}
+                onChangeHandler = {this.handleChange}
               />
               <Input
                 placeholder="Lastname"
                 name="lastname"
-                onChange = {this.handleChange}
+                onChangeHandler = {this.handleChange}
               />
               <Input
                 placeholder="E-mail"
                 name="email"
-                onChange = {this.handleChange}
+                onChangeHandler = {this.handleChange}
               />
               <Input
                 placeholder="Password"
                 name="password"
-                onChange = {this.handleChange}
+                onChangeHandler = {this.handleChange}
               />
               <Input
                 placeholder="Business name"
                 name="alias"
-                onChange = {this.handleChange}
+                onChangeHandler = {this.handleChange}
               />
               <Input
                 placeholder="Address"
                 name="address"
-                onChange = {this.handleChange}
+                onChangeHandler = {this.handleChange}
               />
               <Input
                 placeholder="City"
                 name="city"
-                onChange = {this.handleChange}
+                onChangeHandler = {this.handleChange}
               />
               <Button
                 unelevated
