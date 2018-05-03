@@ -7,11 +7,6 @@ export default class Input extends PureComponent {
     this.state = props
   }
 
-  handleChange(e) {
-      const view = this.state.view
-
-      this.state.onChange(this.state.view, e);
-  }
 
   render() {
     return (
@@ -21,6 +16,7 @@ export default class Input extends PureComponent {
               placeholder={this.state.placeholder}
               name={this.state.name}
               style={inputStyle}
+              onChange = {this.props.onChange}
           />
         </div>
     )
