@@ -24,10 +24,6 @@ export default class MainIntroScreen extends Screen {
     console.log('on cloud primary action....')
   }
 
-  get features () {
-    return ([])
-  }
-
   handleChange = (e) => {
       this.setState({
           [e.target.name] : e.target.value
@@ -35,16 +31,13 @@ export default class MainIntroScreen extends Screen {
   }
 
   submitLogin = () => {
-    console.log('aa ', this.transitions)
-      this.transitions.showLoggedin()
-    // promiseRequest('POST', REQUEST_URL.login, this.state)
-    //   .then( res => this.handleLoginSuccess(res))
-    //   .catch( err => { 
-    //     // this.setState({
-    //     //   errorMessage: 'Error occured'
-    //     // })
-    //     console.log('catch, ', this.transitions, err)
-    //   })
+    promiseRequest('POST', REQUEST_URL.login, this.state)
+      .then( res => this.handleLoginSuccess(res))
+      .catch( err => { 
+        this.setState({
+          errorMessage: 'Error occured'
+        })
+      })
   }
 
   handleLoginSuccess = (res) => {
@@ -55,20 +48,13 @@ export default class MainIntroScreen extends Screen {
     } else {
       Data.Cache.cacheItem('userData', res.data)
       .then( () => { 
-        console.log('aiciiiii ', this.transitions)
-        this.transitions.showLoggedin()
+        window.location = '/dashboard'
       })
       .catch((err) => {})
     }
   }
 
-  components () {
-    this.props.footer.sections = []
-    return super.components()
-            .concat([this.renderInputs])
-  }
-
-   get renderInputs () {
+  render() {
     return(
       <div>
          <Input

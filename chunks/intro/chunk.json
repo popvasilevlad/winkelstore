@@ -10,14 +10,11 @@
     "register": {
         "title": "register"
     },
-    "loggedin": {
-     "title": "Login",
-      "icon": "login",
+    "dashboard": {
+     "title": "dashboard",
+      "icon": "dashboard",
       "skipExtendedMenuOnDesktop": true,
-      "path": "/loggedin"
+      "path": "/dashboard"
     }
-  },
-  "transitions": [
-    "replace://loggedin"
-  ]
+  }
 }

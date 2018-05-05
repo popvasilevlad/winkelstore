@@ -2,7 +2,7 @@ import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
 import { Data } from 'react-chunky'
 
-export default class LoggedinScreen extends Screen {
+export default class DashboardScreen extends Screen {
   constructor (props) {
     console.log('props', props)
     super(props)
@@ -12,16 +12,9 @@ export default class LoggedinScreen extends Screen {
   }
 
   componentDidMount () {
-    console.log('mount')
     super.componentDidMount()
     this.getUserData();
   }
-
-  // components () {
-  //   this.props.footer.sections = []
-  //   return super.components()
-  //           // .concat([this.renderInputs])
-  // }
 
   getUserData = () => {
     Data.Cache.retrieveCachedItem('userData')
