@@ -8,7 +8,6 @@
     "start": {
       "stack": [
         "intro",
-        "login",
         "register"
       ]
     }

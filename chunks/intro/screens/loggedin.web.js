@@ -4,6 +4,7 @@ import { Data } from 'react-chunky'
 
 export default class LoggedinScreen extends Screen {
   constructor (props) {
+    console.log('props', props)
     super(props)
     this.state = {...this.state,
       loading: true
@@ -11,6 +12,7 @@ export default class LoggedinScreen extends Screen {
   }
 
   componentDidMount () {
+    console.log('mount')
     super.componentDidMount()
     this.getUserData();
   }
