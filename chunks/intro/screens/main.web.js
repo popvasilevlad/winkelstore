@@ -30,6 +30,10 @@ export default class MainIntroScreen extends Screen {
       });
   }
 
+  goToRegister()  {
+    window.location = '/register'
+  }
+
   submitLogin = () => {
     promiseRequest('POST', REQUEST_URL.login, this.state)
       .then( res => this.handleLoginSuccess(res))
@@ -55,30 +59,60 @@ export default class MainIntroScreen extends Screen {
   }
 
   render() {
+  const imageUrl = require(`../../../images/spotlight.jpg`)
     return(
       <div>
-         <Input
-          placeholder = "E-mail"
-          name="email"
-          onChangeHandler = {this.handleChange}
-        />
-        <Input
-          placeholder="Password"
-          name="password"
-          type="password"
-          onChangeHandler = {this.handleChange}
-        />
-        {
-          this.state.errorMessage.length ?
-            <div className="error-wrapper">Incorect</div>
-            : null
-        }
-        <Button
-          unelevated
-          onClick={this.submitLogin}
+        <div 
+          style={{ backgroundImage: `url(${imageUrl})` }}
+          className="jumbotron-wrapper"
         >
-          LOG IN
-        </Button>
+          <div className="intro-menu">
+            <Button
+              unelevated
+              onClick={this.goToRegister}
+              style={{marginRight: '20px'}}
+            >
+              REGISTER
+            </Button>
+            <a href="#login-section">
+              <Button
+                unelevated
+              >
+                LOG IN
+              </Button>
+            </a>
+          </div>
+          <div className="jumbotron-content">
+            <h1>Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</h1>
+            <h2>Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</h2>
+          </div>
+        </div>
+        <a name="login-section"></a>
+        <div className="auth-section">
+          <Input
+            placeholder = "E-mail"
+            name="email"
+            onChangeHandler = {this.handleChange}
+          />
+          <Input
+            placeholder="Password"
+            name="password"
+            type="password"
+            onChangeHandler = {this.handleChange}
+          />
+          {
+            this.state.errorMessage.length ?
+              <div className="error-wrapper">Incorect</div>
+              : null
+          }
+
+          <Button
+            unelevated
+            onClick={this.submitLogin}
+          >
+            LOG IN
+          </Button>
+        </div>
       </div>
     )
   }

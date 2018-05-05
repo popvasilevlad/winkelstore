@@ -1,3 +1,29 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+.jumbotron-wrapper {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  height: 500px;
+  position: relative;
+}
+.jumbotron-content {
+  width: 800px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  color: #FFF;
+}
+.intro-menu {
+  width: 1200px;
+  margin: 0 auto;
+  text-align: right;
+  padding: 20px 0;
+}
 .vertical-timeline {
   width: 95%;
   max-width: 1170px;
