@@ -1,11 +1,20 @@
 {
-  "name": "login",
-  "routes": {
-    "main": {
-      "title": "Login",
-      "icon": "login",
-      "skipExtendedMenuOnDesktop": true,
-      "path": "/login"
-    }
-  }
+	"name": "login",
+	"routes": {
+		"main": {
+			"title": "Login",
+			"icon": "login",
+			"skipExtendedMenuOnDesktop": true,
+			"path": "/login"
+		},
+		"loggedin": {
+			"title": "Login",
+			"icon": "login",
+			"skipExtendedMenuOnDesktop": true,
+			"path": "/loggedin"
+		}
+	},
+	"transitions": [
+		"replace://loggedin"
+	]
 }

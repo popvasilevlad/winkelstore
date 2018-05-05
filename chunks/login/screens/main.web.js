@@ -4,6 +4,7 @@ import Input from '../../intro/components/input'
 import { Button, ButtonIcon } from 'rmwc/Button';
 import { promiseRequest } from '../../intro/utils';
 import { REQUEST_URL } from '../../intro/utils/constants';
+import { Data } from 'react-chunky'
 
 export default class MainIntroScreen extends Screen {
 
@@ -33,12 +34,7 @@ export default class MainIntroScreen extends Screen {
 
   submitLogin = () => {
     promiseRequest('POST', REQUEST_URL.login, this.state)
-      .then( res => {
-        if(!res.success)
-          this.setState({
-            errorMessage: res.message
-          })
-      })
+      .then( res => this.handleLoginSuccess(res))
       .catch( err => { 
         this.setState({
           errorMessage: 'Error occured'
@@ -46,9 +42,23 @@ export default class MainIntroScreen extends Screen {
       })
   }
 
+  handleLoginSuccess = (res) => {
+    if(!res.success) {
+      this.setState({
+        errorMessage: res.message
+      })
+    } else {
+      Data.Cache.cacheItem('userData', res.data)
+      .then( () => { 
+        this.transitions.showLoggedin()
+      })
+      .catch((err) => {})
+    }
+
+  }
+
 
   get renderInputs () {
-    console.log('  sa', this.state)
       return (
           <div>
              <Input
