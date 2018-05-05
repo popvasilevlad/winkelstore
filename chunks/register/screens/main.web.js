@@ -65,6 +65,7 @@ export default class MainIntroScreen extends Screen {
               <Input
                 placeholder="Password"
                 name="password"
+                type="password"
                 onChangeHandler = {this.handleChange}
               />
               <Input
