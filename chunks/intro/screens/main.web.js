@@ -1,10 +1,11 @@
 import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
 import Input from '../../intro/components/input'
-import { Button, ButtonIcon } from 'rmwc/Button';
+import LandingMenu from '../components/landing-menu'
 import { promiseRequest } from '../../intro/utils';
-import { REQUEST_URL } from '../../intro/utils/constants';
+import { REQUEST_URL } from '../../intro/utils/constants'
 import { Data } from 'react-chunky'
+import { Button } from 'rmwc/Button';
 
 export default class MainIntroScreen extends Screen {
 
@@ -64,24 +65,10 @@ export default class MainIntroScreen extends Screen {
         <div
           className="jumbotron-wrapper"
         >
-          <div className="intro-menu">
-            <a href="#login-section">
-              <button
-              className="btn highlight-btn"
-              style={{marginRight: '20px',
-              }}
-              >
-                LOG IN
-              </button>
-            </a>
-            <button
-            className="btn outlined-btn"
-            onClick={this.goToRegister}
-            >
-                REGISTER
-            </button>
-          </div>
-          <div className="jumbotron-content">
+        <LandingMenu
+            handleRegister={this.handleRegister}
+        />
+        <div className="jumbotron-content">
             <h1>Let us be your inventory assistant</h1>
             <h2>Keep track of inward and outward flow of stocks along with reason and other details.</h2>
           </div>
