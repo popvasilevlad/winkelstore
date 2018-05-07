@@ -2,6 +2,7 @@ import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
 import Input from '../../intro/components/input'
 import LandingMenu from '../components/landing-menu'
+import Jumbotron from '../components/jumbotron';
 import { promiseRequest } from '../../intro/utils';
 import { REQUEST_URL } from '../../intro/utils/constants'
 import { Data } from 'react-chunky'
@@ -62,16 +63,9 @@ export default class MainIntroScreen extends Screen {
   render() {
     return(
       <div>
-        <div
-          className="jumbotron-wrapper"
-        >
-        <LandingMenu
-            handleRegister={this.handleRegister}
-        />
-        <div className="jumbotron-content">
-            <h1>Let us be your inventory assistant</h1>
-            <h2>Keep track of inward and outward flow of stocks along with reason and other details.</h2>
-          </div>
+        <div className="jumbotron-wrapper">
+            <LandingMenu />
+            <Jumbotron />
         </div>
         <a name="login-section"></a>
         <div className="auth-section">
