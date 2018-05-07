@@ -66,18 +66,20 @@ export default class MainIntroScreen extends Screen {
         >
           <div className="intro-menu">
             <a href="#login-section">
-              <Button
-              raised
-              style={{marginRight: '20px'}}
+              <button
+              className="btn highlight-btn"
+              style={{marginRight: '20px',
+              }}
               >
                 LOG IN
-              </Button>
+              </button>
             </a>
-            <Button
+            <button
+            className="btn outlined-btn"
             onClick={this.goToRegister}
             >
                 REGISTER
-            </Button>
+            </button>
           </div>
           <div className="jumbotron-content">
             <h1>Let us be your inventory assistant</h1>
