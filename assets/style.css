@@ -3,6 +3,7 @@ body {
   font-family: sans-serif;
 }
 .jumbotron-wrapper {
+  background-image: url(https://images.pexels.com/photos/373076/pexels-photo-373076.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
@@ -16,7 +17,7 @@ body {
   position: absolute;
   transform: translateX(-50%) translateY(-50%);
   text-align: center;
-  color: #FFF;
+  color: rgba(0,0,0,0.5);
 }
 .intro-menu {
   width: 1200px;

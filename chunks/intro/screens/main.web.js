@@ -10,7 +10,7 @@ export default class MainIntroScreen extends Screen {
 
   constructor (props) {
     super(props)
-    this.state = { 
+    this.state = {
       ...this.state,
       errorMessage: ''
     }
@@ -37,7 +37,7 @@ export default class MainIntroScreen extends Screen {
   submitLogin = () => {
     promiseRequest('POST', REQUEST_URL.login, this.state)
       .then( res => this.handleLoginSuccess(res))
-      .catch( err => { 
+      .catch( err => {
         this.setState({
           errorMessage: 'Error occured'
         })
@@ -51,7 +51,7 @@ export default class MainIntroScreen extends Screen {
       })
     } else {
       Data.Cache.cacheItem('userData', res.data)
-      .then( () => { 
+      .then( () => {
         window.location = '/dashboard'
       })
       .catch((err) => {})
@@ -59,32 +59,29 @@ export default class MainIntroScreen extends Screen {
   }
 
   render() {
-  const imageUrl = require(`../../../images/spotlight.jpg`)
     return(
       <div>
-        <div 
-          style={{ backgroundImage: `url(${imageUrl})` }}
+        <div
           className="jumbotron-wrapper"
         >
           <div className="intro-menu">
-            <Button
-              unelevated
-              onClick={this.goToRegister}
-              style={{marginRight: '20px'}}
-            >
-              REGISTER
-            </Button>
             <a href="#login-section">
               <Button
-                unelevated
+              raised
+              style={{marginRight: '20px'}}
               >
                 LOG IN
               </Button>
             </a>
+            <Button
+            onClick={this.goToRegister}
+            >
+                REGISTER
+            </Button>
           </div>
           <div className="jumbotron-content">
-            <h1>Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</h1>
-            <h2>Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</h2>
+            <h1>Let us be your inventory assistant</h1>
+            <h2>Keep track of inward and outward flow of stocks along with reason and other details.</h2>
           </div>
         </div>
         <a name="login-section"></a>
