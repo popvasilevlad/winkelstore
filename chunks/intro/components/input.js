@@ -15,7 +15,8 @@ export default class Input extends PureComponent {
 
   render() {
     return (
-        <div>
+        <div className="input-holder">
+          <div>{this.props.description}</div>
           <input
               value={this.state.value}
               placeholder={this.state.placeholder}
@@ -24,6 +25,7 @@ export default class Input extends PureComponent {
               type={this.props.type || 'text'}
               onChange={(event) => this.props.onChangeHandler(event, this.state.name)}
           />
+          <div className="input-error"></div>
         </div>
     )
   }

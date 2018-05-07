@@ -7,7 +7,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
-  height: 500px;
+  height: 600px;
   position: relative;
 }
 .jumbotron-content {
@@ -25,12 +25,52 @@ body {
   text-align: right;
   padding: 20px 0;
 }
+
+/* Login Section Styling*/
+.login-section {
+    background-color: #3d463c;
+    color: #FFF;
+}
+.login-form {
+    padding-top: 50px;
+}
+.login-form form {
+    width: 300px;
+    margin: 30px auto 0;
+}
+.login-form input {
+    background-color: #FFF;
+    border-radius: 3px;
+    width: 100%;
+}
+.login-section-wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 100px 0;
+    display: flex;
+    box-sizing: border-box;
+}
+.register-advice {
+    flex-basis: 60%;
+    padding: 0 150px 0 0;
+    text-align: center;
+}
+.login-section p {
+    font-size: 20px;
+}
+.register-img {
+    width: 200px;
+}
+
+/* Buttons Styling */
 .btn {
     height: 30px;
-    min-width: 100px;
     outline: 0;
     border:0;
     border-radius: 3px;
+    padding: 0 20px;
+    font-weight: bold;
+    text-align: center;
 }
 .btn:hover {
     cursor: pointer;
@@ -39,21 +79,37 @@ body {
     background-color: transparent;
     border: 1px solid #3d7340;
     color: #3d7340;
-    font-weight: bold;
 }
-.highlight-btn, .light-btn:hover {
+.highlight-btn {
     color: #FFF;
-    background-color: #57a45b;
-    font-weight: bold;
+    background-color: #57a45b
 }
 .light-btn {
-    color: #57a45b;
+    color: #3d463c;
     background-color: #FFF;
+}
+.light-btn:hover {
+    background-color: #57a45b;
+    border: 1px solid #57a45b;
+    color: #FFF;
 }
 .highlight-btn:hover, .outlined-btn:hover {
     color: #FFF;
-    border: 0;
     background-color: #3d7340;
+    border: 1px solid #3d7340;
+}
+
+/* Inputs styling */
+.input-holder {
+    margin-top: 20px;
+}
+input {
+    outline: 0;
+    border: 1px solid rgba(0,0,0,0.7);
+    box-sizing: border-box;
+}
+.error-wrapper {
+    color: #f62424;
 }
 .vertical-timeline {
   width: 95%;
