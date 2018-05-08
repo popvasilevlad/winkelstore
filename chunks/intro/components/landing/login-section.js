@@ -11,6 +11,15 @@ export default class LoginSection extends PureComponent {
             ...this.state,
             errorMessage: ''
         }
+        this.checkIfLoggedIn()
+    }
+
+    checkIfLoggedIn() {
+        Data.Cache.retrieveCachedItem('userData')
+        .then(() => {
+          window.location ='/dashboard'
+        })
+        .catch( () => {})
     }
 
     goToRegister() {

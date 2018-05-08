@@ -22,7 +22,7 @@ export default class DashboardScreen extends Screen {
           window.location = '/'
       })
       .catch( err => {
-          console.log(err);
+          console.log(err)
       })
   }
 
