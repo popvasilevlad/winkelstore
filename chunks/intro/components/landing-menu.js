@@ -13,7 +13,7 @@ export default class LandingMenu extends PureComponent {
     render() {
         return (
             <div className="intro-menu">
-              <a href="#login-section">
+              <a href="/#login-section">
                 <button
                 className="btn highlight-btn"
                 style={{marginRight: '20px',
@@ -23,7 +23,7 @@ export default class LandingMenu extends PureComponent {
                 </button>
               </a>
               <button
-              className="btn outlined-btn"
+              className="btn light-btn"
               onClick ={this.handleRegisterClick}
               >
                   REGISTER

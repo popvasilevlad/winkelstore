@@ -62,6 +62,31 @@ body {
     width: 200px;
 }
 
+/* Register Styling */
+.register-section {
+    background-image: url(https://images.pexels.com/photos/373076/pexels-photo-373076.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 100px;
+    min-height: 700px;
+}
+.register-wrapper {
+    width: 500px;
+    min-height: 300px;
+    background-color: #FFF;
+    padding: 50px 100px;
+    margin: 50px auto;
+    border-radius: 5px;
+}
+.register-col {
+    flex-basis: 50%;
+    padding: 0 30px;
+}
+.register-btn.btn {
+    margin-top: 10px;
+    height: 40px;
+    width: 170px;
+}
 /* Buttons Styling */
 .btn {
     height: 30px;
@@ -85,18 +110,16 @@ body {
     background-color: #57a45b
 }
 .light-btn {
-    color: #3d463c;
+    color: #57a45b;
     background-color: #FFF;
 }
 .light-btn:hover {
     background-color: #57a45b;
-    border: 1px solid #57a45b;
     color: #FFF;
 }
 .highlight-btn:hover, .outlined-btn:hover {
     color: #FFF;
     background-color: #3d7340;
-    border: 1px solid #3d7340;
 }
 
 /* Inputs styling */
@@ -104,8 +127,9 @@ body {
     margin-top: 20px;
 }
 input {
+    width: 100%;
     outline: 0;
-    border: 1px solid rgba(0,0,0,0.7);
+    border: 1px solid rgba(0,0,0,0.3);
     box-sizing: border-box;
 }
 .error-wrapper {

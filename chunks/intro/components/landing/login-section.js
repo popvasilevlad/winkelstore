@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react'
 import Input from '../input'
-import { promiseRequest } from '../../utils';
+import { promiseRequest } from '../../utils'
 import { REQUEST_URL } from '../../utils/constants'
 import { Data } from 'react-chunky'
 
@@ -65,8 +65,7 @@ export default class LoginSection extends PureComponent {
                         <br/>Start your journey now!
                         </p>
                         <button
-                        className="btn light-btn"
-                        style={{marginTop: '10px', height: '40px', width: '170px'}}
+                        className="btn light-btn register-btn"
                         onClick={this.goToRegister}
                         >REGISTER NOW</button>
                     </div>
@@ -88,7 +87,7 @@ export default class LoginSection extends PureComponent {
                             />
                             {
                                 this.state.errorMessage.length ?
-                                <div className="error-wrapper">Invalid username or password</div>
+                                    <div className="error-wrapper">Invalid username or password</div>
                                 : null
                             }
 
