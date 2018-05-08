@@ -16,15 +16,27 @@ export default class DashboardScreen extends Screen {
     this.getUserData();
   }
 
+  signOut() {
+      Data.Cache.clearCachedItem('userData')
+      .then(() => {
+          window.location = '/'
+      })
+      .catch( err => {
+          console.log(err);
+      })
+  }
+
   getUserData = () => {
     Data.Cache.retrieveCachedItem('userData')
     .then(data => {
       this.setState({
         data,
         loading: false
-      }) 
+      })
     })
-    .catch( () => {});
+    .catch( () => {
+        window.location = '/'
+    });
   }
 
   render () {
@@ -33,6 +45,11 @@ export default class DashboardScreen extends Screen {
     return (
       <div> ceva
         <div>{this.state.data.first_name}</div>
+        <button
+        className="btn highlight-btn"
+        onClick={this.signOut}>
+            SIGN OUT
+        </button>
       </div>
     )
   }
