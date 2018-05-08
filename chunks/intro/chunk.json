@@ -9,12 +9,6 @@
     },
     "register": {
         "title": "register"
-    },
-    "dashboard": {
-     "title": "dashboard",
-      "icon": "dashboard",
-      "skipExtendedMenuOnDesktop": true,
-      "path": "/dashboard"
     }
   }
 }

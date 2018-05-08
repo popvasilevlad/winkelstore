@@ -1,0 +1,11 @@
+{
+  "name": "dashboard",
+  "routes": {
+    "main": {
+      "title": "dashboard",
+      "icon": "dashboard",
+      "skipExtendedMenuOnDesktop": true,
+      "path": "/dashboard"
+    }
+  }
+}
