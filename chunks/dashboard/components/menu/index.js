@@ -7,7 +7,7 @@ export default class Menu extends PureComponent {
     super(props)
     this.state = {
       ...this.state,
-      activeTab: 'Dashboard'
+      activeTab: 'dashboard'
     }
   }
 
@@ -15,6 +15,7 @@ export default class Menu extends PureComponent {
     this.setState({
       activeTab: tab
     });
+    this.props.handleTabChange(tab);
   }
 
   signOut() {
@@ -31,24 +32,24 @@ export default class Menu extends PureComponent {
     return (
       <div className="dashboard-menu">
         <MenuItem
-              text="Dashboard"
+              text="dashboard"
               activeTab={this.state.activeTab}
               handleClick={this.handleClick}
             />
         <MenuItem
-          text="Products"
+          text="products"
           activeTab={this.state.activeTab}
           handleClick={this.handleClick}
         />
         <MenuItem
-          text="Inventory"
+          text="inventory"
           activeTab={this.state.activeTab}
           handleClick={this.handleClick}
           />
           <div
           style={{marginLeft:'auto'}}>
             <MenuItem
-            text="Profile"
+            text="profile"
             activeTab={this.state.activeTab}
             handleClick={this.handleClick}
             />

@@ -1,44 +1,47 @@
 import React from 'react'
 import { Screen, Components } from 'react-dom-chunky'
-import { Data } from 'react-chunky'
 import Menu from '../components/menu/';
+import Products from './tabs/products';
+import Dashboard from './tabs/dashboard';
+import Inventory from './tabs/inventory';
+import Profile from './tabs/profile';
 
 export default class DashboardScreen extends Screen {
   constructor (props) {
     super(props)
     this.state = {...this.state,
-      loading: true
+      activeTab: 'dashboard'
     }
   }
 
-  componentDidMount () {
-    super.componentDidMount()
-    this.getUserData();
-  }
-
-  getUserData = () => {
-    Data.Cache.retrieveCachedItem('userData')
-    .then(data => {
-      this.setState({
-        data,
-        loading: false
-      })
+  handleTabChange = (tab) => {
+    this.setState({
+      activeTab: tab
     })
-    .catch( () => {
-        window.location = '/'
-    });
   }
 
   render () {
-    if (this.state.loading) return (<div><br/><br/>Loading</div>)
 
     return (
       <div className="dashboard-body">
         <Menu
-          activeTab="dashboard"
+          activeTab={this.state.activeTab}
+          handleTabChange={this.handleTabChange}
         />
         <br/>
-        <div>Bun venit, {this.state.data.first_name} {this.state.data.last_name}!</div>
+        {
+          this.state.activeTab === 'dashboard' ?
+          <Dashboard />
+          :
+          this.state.activeTab === 'products' ?
+            <Products />
+            :
+            this.state.activeTab === 'inventory' ?
+            <Inventory />
+            :
+            <Profile />
+        }
+
       </div>
     )
   }
