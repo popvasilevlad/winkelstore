@@ -40,47 +40,49 @@ export default class ProductForm extends PureComponent {
 
   render() {
     return (
-      <div className="add-product-form">
-        <Input
-        placeholder="Name"
-        name="name"
-        description="Name"
-        onChangeHandler = {this.handleChange}
-        holderStyle={{flexBasis:'15%'}}
-        />
-        <Input
-        placeholder = "Price"
-        name="price"
-        description="Price"
-        onChangeHandler = {this.handleChange}
-        />
-        <Input
-        placeholder = "Code"
-        name="code"
-        description="Code"
-        onChangeHandler = {this.handleChange}
-        />
-        <Input
-        placeholder = "Description"
-        name="description"
-        description="Description"
-        onChangeHandler = {this.handleChange}
-        holderStyle={{flexBasis:'30%'}}
-        />
-        <div className="input-holder" style={{flexBasis:'10%'}}>
-          <button
-          onClick={this.submitAdd}
-          className="highlight-btn btn"
-          style={{height:'40px', width: '100%', marginTop: '25px'}}>
-          ADD
-          </button>
+      <div>
+        <div className="add-product-form">
+          <Input
+          placeholder="Name"
+          name="name"
+          description="Name"
+          onChangeHandler = {this.handleChange}
+          holderStyle={{flexBasis:'15%'}}
+          />
+          <Input
+          placeholder = "Price"
+          name="price"
+          description="Price"
+          onChangeHandler = {this.handleChange}
+          />
+          <Input
+          placeholder = "Code"
+          name="code"
+          description="Code"
+          onChangeHandler = {this.handleChange}
+          />
+          <Input
+          placeholder = "Description"
+          name="description"
+          description="Description"
+          onChangeHandler = {this.handleChange}
+          holderStyle={{flexBasis:'30%'}}
+          />
+          <div className="input-holder" style={{flexBasis:'10%'}}>
+            <button
+            onClick={this.submitAdd}
+            className="highlight-btn btn"
+            style={{height:'40px', width: '100%', marginTop: '25px'}}>
+            ADD
+            </button>
+          </div>
         </div>
         {
           this.state.errorMessage.length ?
           <div
           className="error-wrapper"
-          style={{padding: '55px 20px 0 0'}}>
-            {this.state.errorMessage}
+          style={{padding: '15px 0 0'}}>
+          {this.state.errorMessage}
           </div>
           : null
         }

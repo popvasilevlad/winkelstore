@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
 import PlusCircle from 'react-icons/lib/fa/plus-circle'
-// import Input from '../../../intro/components/input'
 import ProductForm from '../../components/product-form'
+import ProductsTable from '../../components/table'
+
 
 export default class ProductsScreen extends PureComponent {
   constructor() {
@@ -25,8 +26,12 @@ export default class ProductsScreen extends PureComponent {
     this.toggleProductForm();
   }
 
+  getProducts() {
+  }
+
   render() {
-    // if (this.state.loading) return (<div><br/><br/>Loading</div>)
+    const headers = ['Code', 'Name', 'Price', 'Description', '']
+    const sizes = ['10%', '20%', '10%', '50%', '10%']
 
     return (
       <div>
@@ -52,6 +57,12 @@ export default class ProductsScreen extends PureComponent {
               :
               null
           }
+        </div>
+        <div className="white-card">
+          <ProductsTable
+          headers={this.headers}
+          // rows={rows}
+          dimensions={sizes} />
         </div>
       </div>
     )

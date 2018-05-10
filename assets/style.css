@@ -189,6 +189,27 @@ input {
   margin-right: 20px;
 }
 
+/* Table */
+.table-row {
+  display: flex;
+}
+.table-row div {
+  padding: 10px 20px 10px 10px;
+}
+.table-row.header {
+  background-color: #565650;
+  color: #FFF;
+}
+.table-row.header div {
+  border-right: 1px solid rgba(255,255,255, 0.2);
+}
+/*.products-table .table-row div {
+  flex-basis: 20%;
+}*/
+
+
+
+
 .vertical-timeline {
   width: 95%;
   max-width: 1170px;
