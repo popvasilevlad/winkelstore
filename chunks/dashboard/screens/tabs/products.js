@@ -8,17 +8,21 @@ export default class ProductsScreen extends PureComponent {
     super()
     this.state = {
       ...this.state,
-      addFormOpened: true
-      // addFormOpened: false
+      addFormOpened: false
     }
     //   loading: true,
     // }
   }
 
-  addProduct = () => {
+  toggleProductForm = () => {
     this.setState({
       addFormOpened: !this.state.addFormOpened
     })
+  }
+
+  handleSuccess = () => {
+    console.log('handleSuccess');
+    this.toggleProductForm();
   }
 
   render() {
@@ -31,7 +35,7 @@ export default class ProductsScreen extends PureComponent {
         style={{textAlign: 'center'}}>
           <div
            className="action-item"
-           onClick={this.addProduct}
+           onClick={this.toggleProductForm}
            >
             <PlusCircle
             style={{
@@ -43,7 +47,8 @@ export default class ProductsScreen extends PureComponent {
           </div>
           {
             this.state.addFormOpened ?
-              <ProductForm />
+              <ProductForm
+              handleSucces={this.handleSuccess}/>
               :
               null
           }
