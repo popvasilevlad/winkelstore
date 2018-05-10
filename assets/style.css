@@ -166,6 +166,29 @@ input {
   border-bottom: 3px solid #FFF;
 }
 
+/* white card */
+.white-card {
+  background-color: #FFF;
+  color: #565650;
+  border-radius: 3px;
+  margin: 20px;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.2);
+  padding: 20px;
+}
+.action-item {
+  cursor: pointer;
+}
+.action-item:hover {
+  opacity: 0.5;
+}
+.add-product-form {
+  text-align: left;
+  display: flex;
+}
+.add-product-form .input-holder{
+  margin-right: 20px;
+}
+
 .vertical-timeline {
   width: 95%;
   max-width: 1170px;
