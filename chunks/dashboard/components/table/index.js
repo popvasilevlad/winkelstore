@@ -7,17 +7,27 @@ export default class Table extends PureComponent {
     this.state = {...this.state}
   }
 
+  createTable() {
+    let rows = []
+
+    for (var key in this.props.data) {
+      rows.push(
+        <Tr data={this.props.data[key]}
+        columns={this.props.columns}
+        key={key}
+        />
+      )
+    }
+
+    return rows
+  }
+
   render() {
+    const rows = this.createTable()
     return (
       <div className="products-table">
-        <Tr
-          header={true}
-          headers={this.props.headers}
-          dimensions={this.props.dimensions}
-        />
-        <Tr dimensions={this.props.dimensions}/>
-        <Tr dimensions={this.props.dimensions}/>
-        <Tr dimensions={this.props.dimensions}/>
+        <Tr header={true} columns={this.props.columns} />
+        {rows}
       </div>
     )
   }

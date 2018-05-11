@@ -4,18 +4,19 @@ import ProductForm from '../../components/product-form'
 import ProductsTable from '../../components/table'
 import { REQUEST_URL } from '../../../intro/utils/constants'
 import { Data } from 'react-chunky'
+import { promiseRequest } from '../../../intro/utils'
 
 export default class ProductsScreen extends PureComponent {
   constructor() {
     super()
     this.state = {
       ...this.state,
-      addFormOpened: false
+      addFormOpened: false,
+      loadingMessage: 'Products are loading...'
     }
-    //   loading: true,
-    // }
     this.getUserData();
   }
+
 
   getUserData = () => {
     Data.Cache.retrieveCachedItem('userData')
@@ -23,6 +24,7 @@ export default class ProductsScreen extends PureComponent {
       this.setState({
         data: data
       })
+      this.getProducts()
     })
     .catch( () => {
         window.location = '/'
@@ -37,27 +39,55 @@ export default class ProductsScreen extends PureComponent {
   }
 
   handleSuccess = () => {
-    console.log('handleSuccess');
     this.toggleProductForm();
   }
 
   getProducts() {
-    promiseRequest('GET', REQUEST_URL.getProducts, this.state)
+    promiseRequest('GET', REQUEST_URL.get_products + '?business_id=109' )
       .then( res => this.handleGetRequest(res))
       .catch( err => {
         this.setState({
-          errorMessage: 'Error occured'
+          loadingMessage: 'Error occured'
         })
       })
   }
 
-  handleGetRequest() {
-    console.log('handle get');
+  handleGetRequest(res) {
+    if (res.success) {
+      this.setState({
+        products: res.products,
+        loadingMessage: ''
+      })
+    } else {
+      this.setState({
+        products: [],
+        loadingMessage: res.message
+      })
+    }
   }
 
   render() {
-    const headers = ['Code', 'Name', 'Price', 'Description', '']
-    const sizes = ['10%', '20%', '10%', '50%', '10%']
+    const columns = [
+      { header: 'Code',
+        size: '10%',
+        key: 'code'
+      },
+      { header: 'Name',
+        size: '25%',
+        key: 'name'
+      },
+      { header: 'Price',
+        size: '10%',
+        key: 'price'
+      },
+      { header: 'Description',
+        size: '45%',
+        key: 'description'
+      },
+      { header: 'Actions',
+        size: '10%'
+      }
+    ]
 
     return (
       <div>
@@ -86,10 +116,19 @@ export default class ProductsScreen extends PureComponent {
           }
         </div>
         <div className="white-card">
+        {
+          this.state.loadingMessage.length ?
+          <div
+          style={{
+            margin: '250px auto',
+            textAlign: 'center',
+            fontSize: '18px'
+          }}>{this.state.loadingMessage}</div>
+          :
           <ProductsTable
-          headers={this.headers}
-          // rows={rows}
-          dimensions={sizes} />
+          columns={columns}
+          data={this.state.products} />
+        }
         </div>
       </div>
     )

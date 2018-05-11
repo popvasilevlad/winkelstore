@@ -138,6 +138,7 @@ input {
 .dashboard-body {
   background-color: #e6e6e4;
   min-height: 700px;
+  padding: 0 0 20px 0;
 }
 /* Dashboard menu styling */
 .dashboard-menu {

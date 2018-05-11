@@ -7,7 +7,7 @@ export default class Menu extends PureComponent {
     super(props)
     this.state = {
       ...this.state,
-      activeTab: 'dashboard'
+      activeTab: props.activeTab
     }
   }
 
