@@ -5,7 +5,6 @@ export default class Table extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {...this.state}
-    console.log(this.props.dimensions);
   }
 
   render() {

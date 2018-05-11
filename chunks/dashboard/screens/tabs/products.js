@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react'
 import PlusCircle from 'react-icons/lib/fa/plus-circle'
 import ProductForm from '../../components/product-form'
 import ProductsTable from '../../components/table'
-
+import { REQUEST_URL } from '../../../intro/utils/constants'
+import { Data } from 'react-chunky'
 
 export default class ProductsScreen extends PureComponent {
   constructor() {
@@ -13,7 +14,21 @@ export default class ProductsScreen extends PureComponent {
     }
     //   loading: true,
     // }
+    this.getUserData();
   }
+
+  getUserData = () => {
+    Data.Cache.retrieveCachedItem('userData')
+    .then(data => {
+      this.setState({
+        data: data
+      })
+    })
+    .catch( () => {
+        window.location = '/'
+    });
+  }
+
 
   toggleProductForm = () => {
     this.setState({
@@ -27,6 +42,17 @@ export default class ProductsScreen extends PureComponent {
   }
 
   getProducts() {
+    promiseRequest('GET', REQUEST_URL.getProducts, this.state)
+      .then( res => this.handleGetRequest(res))
+      .catch( err => {
+        this.setState({
+          errorMessage: 'Error occured'
+        })
+      })
+  }
+
+  handleGetRequest() {
+    console.log('handle get');
   }
 
   render() {
@@ -53,7 +79,8 @@ export default class ProductsScreen extends PureComponent {
           {
             this.state.addFormOpened ?
               <ProductForm
-              handleSucces={this.handleSuccess}/>
+              handleSucces={this.handleSuccess}
+              userData={this.state.data}/>
               :
               null
           }

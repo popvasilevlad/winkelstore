@@ -4,11 +4,13 @@ import { promiseRequest } from '../../intro/utils'
 import { REQUEST_URL } from '../../intro/utils/constants'
 
 export default class ProductForm extends PureComponent {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       ...this.state,
-    errorMessage: ''}
+      business_id: props.userData.business_id,
+      errorMessage: ''
+    }
   }
 
   handleChange = e => {
@@ -18,6 +20,7 @@ export default class ProductForm extends PureComponent {
   }
 
   submitAdd = e => {
+    console.log('this.state = ', this.state);
     e.preventDefault()
     promiseRequest('POST', REQUEST_URL.add_product, this.state)
       .then( res => this.handleAddRequest(res))
