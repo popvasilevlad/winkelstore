@@ -38,8 +38,9 @@ export default class ProductsScreen extends PureComponent {
     })
   }
 
-  handleSuccess = () => {
-    this.toggleProductForm();
+  handleSuccess = (product) => {
+    this.toggleProductForm()
+    this.getProducts()
   }
 
   getProducts() {

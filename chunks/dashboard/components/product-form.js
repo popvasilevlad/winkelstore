@@ -20,7 +20,6 @@ export default class ProductForm extends PureComponent {
   }
 
   submitAdd = e => {
-    console.log('this.state = ', this.state);
     e.preventDefault()
     promiseRequest('POST', REQUEST_URL.add_product, this.state)
       .then( res => this.handleAddRequest(res))
