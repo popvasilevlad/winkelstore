@@ -10,7 +10,7 @@ export default class DashboardScreen extends Screen {
   constructor (props) {
     super(props)
     this.state = {...this.state,
-      activeTab: 'products'
+      activeTab: 'inventory'
     }
   }
 

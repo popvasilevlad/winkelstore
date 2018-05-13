@@ -14,7 +14,7 @@ export default class ProductsScreen extends PureComponent {
       addFormOpened: false,
       loadingMessage: 'Products are loading...'
     }
-    this.getUserData();
+    this.getUserData()
   }
 
 
