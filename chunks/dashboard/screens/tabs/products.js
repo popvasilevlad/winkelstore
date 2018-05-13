@@ -44,7 +44,7 @@ export default class ProductsScreen extends PureComponent {
   }
 
   getProducts() {
-    promiseRequest('GET', REQUEST_URL.get_products + '?business_id=109' )
+    promiseRequest('GET', REQUEST_URL.get_products + '?business_id=' + this.state.data.business_id )
       .then( res => this.handleGetRequest(res))
       .catch( err => {
         this.setState({
@@ -65,6 +65,14 @@ export default class ProductsScreen extends PureComponent {
         loadingMessage: res.message
       })
     }
+  }
+
+  handleDelete = lineData => {
+    promiseRequest('POST', REQUEST_URL.delete_product, lineData)
+      .then( res => {
+        res.success ? this.getProducts() : console.log('Error')
+      })
+      .catch( err => console.log('err = ', err))
   }
 
   render() {
@@ -128,7 +136,8 @@ export default class ProductsScreen extends PureComponent {
           :
           <ProductsTable
           columns={columns}
-          data={this.state.products} />
+          data={this.state.products}
+          handleDelete={this.handleDelete} />
         }
         </div>
       </div>

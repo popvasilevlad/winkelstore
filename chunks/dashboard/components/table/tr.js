@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MinusOctagon from 'react-icons/lib/fa/trash'
+import TrashIcon from 'react-icons/lib/fa/trash'
 
 export default class Tr extends Component {
   constructor(props) {
@@ -24,12 +24,17 @@ export default class Tr extends Component {
             :
             <div
             style={{textAlign:'right', padding: 0, borderRight: 0}}>
-              <MinusOctagon
-              style={{
-                fontSize: '18px',
-                color:'#565650',
-                margin: '-2px 5px 0 0'
-              }}/>
+              { this.props.handleDeleteLine ? 
+                <TrashIcon
+                style={{
+                  fontSize: '18px',
+                  color:'#565650',
+                  margin: '-2px 5px 0 0'
+                }}
+                onClick={() => this.props.handleDeleteLine(this.props.data)}/>
+                :
+                null
+              }
             </div>
           }
         </div>

@@ -15,6 +15,7 @@ export default class Table extends PureComponent {
         <Tr data={this.props.data[key]}
         columns={this.props.columns}
         key={key}
+        handleDeleteLine={this.props.handleDelete}
         />
       )
     }
