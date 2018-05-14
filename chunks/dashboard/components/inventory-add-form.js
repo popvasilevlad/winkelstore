@@ -25,6 +25,7 @@ export default class InventoryAddForm extends PureComponent {
     promiseRequest('POST', REQUEST_URL.inventory_add, this.state)
       .then( res => this.handleAddRequest(res))
       .catch( err => {
+        console.log(err)
         this.setState({
           errorMessage: 'Error occured'
         })
@@ -37,6 +38,9 @@ export default class InventoryAddForm extends PureComponent {
         errorMessage: res.message
       })
     } else {
+      this.setState({
+        errorMessage: ''
+      })
       this.props.handleSucces();
     }
   }
@@ -59,9 +63,9 @@ export default class InventoryAddForm extends PureComponent {
           onChangeHandler = {this.handleChange}
           />
           <Input
-          placeholder = "Comment"
-          name="comment"
-          description="Comment"
+          placeholder = "Observations"
+          name="observations"
+          description="Observations"
           onChangeHandler = {this.handleChange}
           holderStyle={{flexBasis:'30%'}}
           />

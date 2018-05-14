@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import InventoryAddForm from '../../components/inventory-add-form'
 import { Data } from 'react-chunky'
 import PlusCircle from 'react-icons/lib/fa/plus-circle'
+import { REQUEST_URL } from '../../../intro/utils/constants'
+import { promiseRequest } from '../../../intro/utils'
+import InventoryTable from '../../components/table'
 
 export default class InventoryScreen extends PureComponent {
   constructor() {
@@ -9,16 +12,21 @@ export default class InventoryScreen extends PureComponent {
     this.state = {
       ...this.state,
       addFormOpened: false,
-      loading: true
+      loadingMessage: true
     }
     // }
     this.getUserData()
   }
 
-  toggleProductForm = () => {
+  toggleInventoryForm = () => {
     this.setState({
       addFormOpened: !this.state.addFormOpened
     })
+  }
+
+  handleSuccess = () => {
+    this.toggleInventoryForm()
+    this.getProducts()
   }
 
   getUserData = () => {
@@ -27,15 +35,15 @@ export default class InventoryScreen extends PureComponent {
       this.setState({
         data: data
       })
-      // this.getProducts()
+      this.getProducts()
     })
     .catch( (err) => {
-        window.location = '/'
+        console.log('err = ', err);
     });
   }
 
   getProducts() {
-    promiseRequest('GET', REQUEST_URL.get_products + '?business_id=' + this.state.data.business_id )
+    promiseRequest('GET', `${REQUEST_URL.get_inventory}?business_id=${this.state.data.business_id}` )
       .then( res => this.handleGetRequest(res))
       .catch( err => {
         this.setState({
@@ -44,31 +52,90 @@ export default class InventoryScreen extends PureComponent {
       })
   }
 
+  handleGetRequest(res) {
+    if (res.success) {
+      this.setState({
+        products: res.products,
+        loadingMessage: ''
+      })
+    } else {
+      this.setState({
+        products: [],
+        loadingMessage: res.message
+      })
+    }
+  }
+
   render() {
+
+    const columns = [
+      {
+        header: 'Barcode',
+        size: '10%',
+        key: 'code'
+      },
+      { header: 'Name',
+        size: '25%',
+        key: 'name'
+      },
+      {
+        header: 'Observations',
+        size: '40%',
+        key: 'observations'
+      },
+      {
+        header: 'Quantity',
+        size: '15%',
+        key: 'quantity'
+      },
+      {
+        header: 'Actions',
+        size: '10%',
+      }
+    ]
     return (
-      <div 
-      className="white-card"
-      style={{textAlign: 'center'}}>
+      <div>
         <div
-           className="action-item"
-           onClick={this.toggleProductForm}
-           >
-            <PlusCircle
-            style={{
-              fontSize: '24px',
-              color:'#565650',
-              margin: '-2px 5px 0 0'
-            }}/>
-            Add Product
-          </div>
-          {
-            this.state.addFormOpened ?
-              <InventoryAddForm
-              handleSucces={this.handleSuccess}
-              userData={this.state.data}/>
-            :
-            null
-          }
+        className="white-card"
+        style={{textAlign: 'center'}}>
+          <div
+             className="action-item"
+             onClick={this.toggleInventoryForm}
+             >
+              <PlusCircle
+              style={{
+                fontSize: '24px',
+                color:'#565650',
+                margin: '-2px 5px 0 0'
+              }}/>
+              Add Product
+            </div>
+            {
+              this.state.addFormOpened ?
+                <InventoryAddForm
+                handleSucces={this.handleSuccess}
+                userData={this.state.data}/>
+              :
+              null
+            }
+        </div>
+
+        <div className="white-card">
+        {
+          this.state.loadingMessage.length ?
+          <div
+          style={{
+            margin: '250px auto',
+            textAlign: 'center',
+            fontSize: '18px'
+          }}>{this.state.loadingMessage}</div>
+          :
+          <InventoryTable
+          columns={columns}
+          data={this.state.products}
+          handleDelete={this.handleDelete} />
+        }
+        </div>
       </div>
     )
   }

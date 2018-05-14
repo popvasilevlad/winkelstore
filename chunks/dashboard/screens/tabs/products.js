@@ -77,7 +77,7 @@ export default class ProductsScreen extends PureComponent {
 
   render() {
     const columns = [
-      { header: 'Code',
+      { header: 'Barcode',
         size: '10%',
         key: 'code'
       },
