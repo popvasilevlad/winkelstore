@@ -66,6 +66,14 @@ export default class InventoryScreen extends PureComponent {
     }
   }
 
+  handleDelete = lineData => {
+    promiseRequest('POST', REQUEST_URL.delete_inventory_product, lineData)
+      .then( res => {
+        res.success ? this.getProducts() : console.log('Error')
+      })
+      .catch( err => console.log('err = ', err))
+  }
+
   render() {
 
     const columns = [

@@ -6,5 +6,6 @@ export const REQUEST_URL = {
     get_products: 'http://winkelstore.000webhostapp.com/get_products.php',
     delete_product: 'http://winkelstore.000webhostapp.com/delete_product.php',
     inventory_add: 'http://winkelstore.000webhostapp.com/inventory_add.php',
-    get_inventory: 'http://winkelstore.000webhostapp.com/get_inventory.php'
+    get_inventory: 'http://winkelstore.000webhostapp.com/get_inventory.php',
+    delete_inventory_product: 'http://winkelstore.000webhostapp.com/delete_inventory_product.php'
 }
