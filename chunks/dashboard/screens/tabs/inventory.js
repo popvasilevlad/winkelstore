@@ -67,12 +67,18 @@ export default class InventoryScreen extends PureComponent {
     }
   }
 
-  handleDelete = lineData => {
-    promiseRequest('POST', REQUEST_URL.delete_inventory_product, lineData)
+  handleDelete = data => {
+    let productArrayId = [];
+    data.id ? productArrayId.push(data.id) : productArrayId = data
+    promiseRequest('POST', REQUEST_URL.delete_inventory_product, productArrayId)
       .then( res => {
         res.success ? this.getProducts() : console.log('Error')
       })
       .catch( err => console.log('err = ', err))
+  }
+
+  deleteSelections = () => {
+    this.handleDelete(this.state.selections)
   }
 
   handleSelectionsClick = (id, action) => {
@@ -82,8 +88,6 @@ export default class InventoryScreen extends PureComponent {
     this.setState({
         selectedAll: selections
     })
-
-    console.log(this.state.selections);
   }
 
   render() {
@@ -155,11 +159,22 @@ export default class InventoryScreen extends PureComponent {
             fontSize: '18px'
           }}>{this.state.loadingMessage}</div>
           :
-          <InventoryTable
-          columns={columns}
-          data={this.state.products}
-          handleDelete={this.handleDelete}
-          handleSelectionsClick={this.handleSelectionsClick} />
+          <div>
+            <div
+            style={{textAlign:'right'}}>
+              <button
+              className="highlight-btn btn"
+              onClick={this.deleteSelections}
+              style={{height:'40px', margin: '0 0 10px 0'}}>
+                DELETE SELECTIONS
+              </button>
+            </div>
+            <InventoryTable
+            columns={columns}
+            data={this.state.products}
+            handleDelete={this.handleDelete}
+            handleSelectionsClick={this.handleSelectionsClick} />
+          </div>
         }
         </div>
       </div>
