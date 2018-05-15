@@ -5,6 +5,7 @@ import PlusCircle from 'react-icons/lib/fa/plus-circle'
 import { REQUEST_URL } from '../../../intro/utils/constants'
 import { promiseRequest } from '../../../intro/utils'
 import InventoryTable from '../../components/table'
+import $ from 'jquery'
 
 export default class InventoryScreen extends PureComponent {
   constructor() {
@@ -82,6 +83,21 @@ export default class InventoryScreen extends PureComponent {
   }
 
   handleSelectionsClick = (id, action) => {
+    if (id === 'all') {
+      let inputs = $('.products-table').find('input')
+
+      console.log(inputs);
+      for (var key in inputs) {
+        console.log('input ', key, inputs[key]);
+        // if (key !==0) {
+        //   $(inputs[key]).click()
+        // }
+      }
+      // $('.products-table').find('input').reduce(input => {
+      //   console.log($(input));
+      //   $(input).click();
+      // })
+    }
     let selections = this.state.selections
     selections[action](id)
 
