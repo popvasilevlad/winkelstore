@@ -12,7 +12,8 @@ export default class InventoryScreen extends PureComponent {
     this.state = {
       ...this.state,
       addFormOpened: false,
-      loadingMessage: true
+      loadingMessage: true,
+      selections: []
     }
     // }
     this.getUserData()
@@ -74,12 +75,28 @@ export default class InventoryScreen extends PureComponent {
       .catch( err => console.log('err = ', err))
   }
 
+  handleSelectionsClick = (id, action) => {
+    let selections = this.state.selections
+    selections[action](id)
+
+    this.setState({
+        selectedAll: selections
+    })
+
+    console.log(this.state.selections);
+  }
+
   render() {
 
     const columns = [
       {
+        header: '',
+        size: '2',
+        key: 'checkbox'
+      },
+      {
         header: 'Barcode',
-        size: '10%',
+        size: '13%',
         key: 'code'
       },
       { header: 'Name',
@@ -93,7 +110,7 @@ export default class InventoryScreen extends PureComponent {
       },
       {
         header: 'Quantity',
-        size: '15%',
+        size: '10%',
         key: 'quantity'
       },
       {
@@ -141,7 +158,8 @@ export default class InventoryScreen extends PureComponent {
           <InventoryTable
           columns={columns}
           data={this.state.products}
-          handleDelete={this.handleDelete} />
+          handleDelete={this.handleDelete}
+          handleSelectionsClick={this.handleSelectionsClick} />
         }
         </div>
       </div>

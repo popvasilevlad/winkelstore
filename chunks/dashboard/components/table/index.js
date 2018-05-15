@@ -16,6 +16,7 @@ export default class Table extends PureComponent {
         columns={this.props.columns}
         key={key}
         handleDeleteLine={this.props.handleDelete}
+        handleSelectionsClick={this.props.handleSelectionsClick}
         />
       )
     }
@@ -27,7 +28,9 @@ export default class Table extends PureComponent {
     const rows = this.createTable()
     return (
       <div className="products-table">
-        <Tr header={true} columns={this.props.columns} />
+        <Tr header={true}
+        columns={this.props.columns}
+        handleSelectionsClick={this.props.handleSelectionsClick} />
         {rows}
       </div>
     )

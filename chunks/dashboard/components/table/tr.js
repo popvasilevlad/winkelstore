@@ -7,6 +7,12 @@ export default class Tr extends Component {
     this.state = {...this.state}
   }
 
+  handleCheckboxClick = (e) => {
+      let lineId = this.props.data ? this.props.data.id : 'all'
+      let isChecked = e.target.checked ? 'push' : 'pop'
+      this.props.handleSelectionsClick(lineId, isChecked)
+  }
+
   renderCell(cell) {
     let cells = [];
 
@@ -20,11 +26,16 @@ export default class Tr extends Component {
         style={{flexBasis: width}}
         key={key}>
           {column.header !== 'Actions' ?
-            text
+            column.key === 'checkbox' ?
+              <input type="checkbox"
+              style={{width:'15px'}}
+              onClick={ e => {this.handleCheckboxClick(e)}}/>
+              :
+              text
             :
             <div
             style={{textAlign:'right', padding: 0, borderRight: 0}}>
-              { this.props.handleDeleteLine ? 
+              { this.props.handleDeleteLine ?
                 <TrashIcon
                 style={{
                   fontSize: '18px',
