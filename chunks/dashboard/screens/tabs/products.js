@@ -12,6 +12,9 @@ export default class ProductsScreen extends PureComponent {
     this.state = {
       ...this.state,
       addFormOpened: false,
+      products: [],
+      selectedAll: false,
+      selections: [],
       loadingMessage: 'Products are loading...'
     }
     this.getUserData()
@@ -57,28 +60,70 @@ export default class ProductsScreen extends PureComponent {
     if (res.success) {
       this.setState({
         products: res.products,
-        loadingMessage: ''
+        loadingMessage: '',
+        selectedAll: false
       })
     } else {
       this.setState({
         products: [],
-        loadingMessage: res.message
+        loadingMessage: res.message,
+        selectedAll: false
       })
     }
   }
 
-  handleDelete = lineData => {
-    promiseRequest('POST', REQUEST_URL.delete_product, lineData)
+  handleDelete = data => {
+    const param = data && data.name ? [data.id] : data
+    promiseRequest('POST', REQUEST_URL.delete_product, param)
       .then( res => {
         res.success ? this.getProducts() : console.log('Error')
       })
       .catch( err => console.log('err = ', err))
   }
 
+  deleteSelections = () => {
+    if(this.state.selections.length || this.state.selectedAll) {
+      let itemsToDelete = !this.state.selectedAll ? this.state.selections : null
+      this.handleDelete(itemsToDelete)
+    }
+  }
+
+  handleSelectionsClick = (id, action) => {
+    if (id === 'all') {
+      let products = [];
+      for(var key in this.state.products) {
+        let obj = this.state.products[key]
+        obj.checked = action === 'push'
+        products.push(obj)
+      }
+      this.setState({
+        products: products,
+        selectedAll: action === 'push'
+      })
+    } else {
+      let products = this.state.products
+
+      products.find(product => product.id === id).checked = action === 'push'
+      let selectedProducts = products.filter(item => item.checked === true)
+      let selections = selectedProducts.map(product => { return product.id })
+
+      this.setState({
+        products,
+        selectedAll: selectedProducts.length === products.length,
+        selections: selections
+      })
+    }
+  }
+
   render() {
     const columns = [
+        {
+        header: '',
+        size: '1%',
+        key: 'checkbox'
+      },
       { header: 'Barcode',
-        size: '10%',
+        size: '9%',
         key: 'code'
       },
       { header: 'Name',
@@ -134,10 +179,23 @@ export default class ProductsScreen extends PureComponent {
             fontSize: '18px'
           }}>{this.state.loadingMessage}</div>
           :
-          <ProductsTable
-          columns={columns}
-          data={this.state.products}
-          handleDelete={this.handleDelete} />
+          <div>
+            <div
+            style={{textAlign:'right'}}>
+              <button
+              className="highlight-btn btn"
+              onClick={this.deleteSelections}
+              style={{height:'40px', margin: '0 0 10px 0'}}>
+                DELETE SELECTIONS
+              </button>
+            </div>
+            <ProductsTable
+            columns={columns}
+            data={this.state.products}
+            handleDelete={this.handleDelete}
+            handleSelectionsClick={this.handleSelectionsClick}
+            selectedAll={this.state.selectedAll} />
+          </div>
         }
         </div>
       </div>

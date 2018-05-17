@@ -85,7 +85,6 @@ export default class InventoryScreen extends Component {
     if(this.state.selections.length || this.state.selectedAll) {
       let itemsToDelete = !this.state.selectedAll ? this.state.selections : null
       this.handleDelete(itemsToDelete)
-
     }
   }
 
@@ -120,12 +119,12 @@ export default class InventoryScreen extends Component {
     const columns = [
       {
         header: '',
-        size: '2',
+        size: '1%',
         key: 'checkbox'
       },
       {
         header: 'Barcode',
-        size: '13%',
+        size: '14%',
         key: 'code'
       },
       { header: 'Name',
