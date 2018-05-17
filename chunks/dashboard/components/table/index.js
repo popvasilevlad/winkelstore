@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import Tr from './tr'
 
-export default class Table extends PureComponent {
+export default class Table extends Component {
   constructor(props) {
     super(props)
     this.state = {...this.state}
@@ -30,7 +30,8 @@ export default class Table extends PureComponent {
       <div className="products-table">
         <Tr header={true}
         columns={this.props.columns}
-        handleSelectionsClick={this.props.handleSelectionsClick} />
+        handleSelectionsClick={this.props.handleSelectionsClick}
+        selectedAll={this.props.selectedAll} />
         {rows}
       </div>
     )

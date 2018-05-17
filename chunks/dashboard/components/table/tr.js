@@ -20,7 +20,7 @@ export default class Tr extends Component {
       let column = this.props.columns[key]
       let width = column.size
       let text = this.props.header ? column.header : this.props.data[column.key]
-
+      let checkbox = this.props.header ? this.props.selectedAll : this.props.data.checked
       cells.push(
         <div
         style={{flexBasis: width}}
@@ -28,6 +28,7 @@ export default class Tr extends Component {
           {column.header !== 'Actions' ?
             column.key === 'checkbox' ?
               <input type="checkbox"
+              checked={checkbox}
               style={{width:'15px'}}
               onClick={ e => {this.handleCheckboxClick(e)}}/>
               :

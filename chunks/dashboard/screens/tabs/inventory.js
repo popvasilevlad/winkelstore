@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import InventoryAddForm from '../../components/inventory-add-form'
 import { Data } from 'react-chunky'
 import PlusCircle from 'react-icons/lib/fa/plus-circle'
@@ -7,13 +7,15 @@ import { promiseRequest } from '../../../intro/utils'
 import InventoryTable from '../../components/table'
 import $ from 'jquery'
 
-export default class InventoryScreen extends PureComponent {
+export default class InventoryScreen extends Component {
   constructor() {
     super()
     this.state = {
       ...this.state,
       addFormOpened: false,
       loadingMessage: true,
+      products: [],
+      selectedAll: false,
       selections: []
     }
     // }
@@ -58,56 +60,63 @@ export default class InventoryScreen extends PureComponent {
     if (res.success) {
       this.setState({
         products: res.products,
-        loadingMessage: ''
+        loadingMessage: '',
+        selectedAll: false
       })
     } else {
       this.setState({
         products: [],
-        loadingMessage: res.message
+        loadingMessage: res.message,
+        selectedAll: false
       })
     }
   }
 
   handleDelete = data => {
-    let productArrayId = [];
-    data.id ? productArrayId.push(data.id) : productArrayId = data
-    promiseRequest('POST', REQUEST_URL.delete_inventory_product, productArrayId)
+    const param = data && data.name ? [data.id] : data
+    promiseRequest('POST', REQUEST_URL.delete_inventory_product, param)
       .then( res => {
-        res.success ? this.getProducts() : console.log('Error')
+        res.success ? this.getProducts() : console.log('Error. Check response')
       })
       .catch( err => console.log('err = ', err))
   }
 
   deleteSelections = () => {
-    this.handleDelete(this.state.selections)
+    if(this.state.selections.length || this.state.selectedAll) {
+      let itemsToDelete = !this.state.selectedAll ? this.state.selections : null
+      this.handleDelete(itemsToDelete)
+
+    }
   }
 
   handleSelectionsClick = (id, action) => {
     if (id === 'all') {
-      let inputs = $('.products-table').find('input')
-
-      console.log(inputs);
-      for (var key in inputs) {
-        console.log('input ', key, inputs[key]);
-        // if (key !==0) {
-        //   $(inputs[key]).click()
-        // }
+      let products = [];
+      for(var key in this.state.products) {
+        let obj = this.state.products[key]
+        obj.checked = action === 'push'
+        products.push(obj)
       }
-      // $('.products-table').find('input').reduce(input => {
-      //   console.log($(input));
-      //   $(input).click();
-      // })
-    }
-    let selections = this.state.selections
-    selections[action](id)
+      this.setState({
+        products: products,
+        selectedAll: action === 'push'
+      })
+    } else {
+      let products = this.state.products
 
-    this.setState({
-        selectedAll: selections
-    })
+      products.find(product => product.id === id).checked = action === 'push'
+      let selectedProducts = products.filter(item => item.checked === true)
+      let selections = selectedProducts.map(product => { return product.id })
+
+      this.setState({
+        products,
+        selectedAll: selectedProducts.length === products.length,
+        selections: selections
+      })
+    }
   }
 
   render() {
-
     const columns = [
       {
         header: '',
@@ -189,7 +198,8 @@ export default class InventoryScreen extends PureComponent {
             columns={columns}
             data={this.state.products}
             handleDelete={this.handleDelete}
-            handleSelectionsClick={this.handleSelectionsClick} />
+            handleSelectionsClick={this.handleSelectionsClick}
+            selectedAll={this.state.selectedAll} />
           </div>
         }
         </div>
