@@ -72,6 +72,10 @@ export default class ProductsScreen extends PureComponent {
     }
   }
 
+  handleEdit = data => {
+    console.log('acici ', data)
+  }
+
   handleDelete = data => {
     const param = data && data.name ? [data.id] : data
     promiseRequest('POST', REQUEST_URL.delete_product, param)
@@ -192,6 +196,7 @@ export default class ProductsScreen extends PureComponent {
             <ProductsTable
             columns={columns}
             data={this.state.products}
+            handleEdit={this.handleEdit}
             handleDelete={this.handleDelete}
             handleSelectionsClick={this.handleSelectionsClick}
             selectedAll={this.state.selectedAll} />

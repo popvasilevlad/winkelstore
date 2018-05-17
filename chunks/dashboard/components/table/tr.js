@@ -1,16 +1,26 @@
 import React, { Component } from 'react'
 import TrashIcon from 'react-icons/lib/fa/trash'
+import PencilIcon from 'react-icons/lib/fa/pencil'
 
 export default class Tr extends Component {
   constructor(props) {
     super(props)
-    this.state = {...this.state}
+    this.state = {
+      ...this.state,
+      editMode: false
+    }
   }
 
   handleCheckboxClick = (e) => {
       let lineId = this.props.data ? this.props.data.id : 'all'
       let isChecked = e.target.checked ? 'push' : 'pop'
       this.props.handleSelectionsClick(lineId, isChecked)
+  }
+
+  handleEdit = () => {
+    this.setState({
+      editMode: true
+    })
   }
 
   renderCell(cell) {
@@ -32,10 +42,27 @@ export default class Tr extends Component {
               style={{width:'15px'}}
               onClick={ e => {this.handleCheckboxClick(e)}}/>
               :
+              this.editMode ? 
+              <input
+                value={text}
+              />
+              :
               text
             :
             <div
             style={{textAlign:'right', padding: 0, borderRight: 0}}>
+              {
+                this.props.handleEditLine ?
+                <PencilIcon
+                  style={{
+                    fontSize: '20px',
+                    color:'#565650',
+                    margin: '0 10px 0 0'
+                  }}
+                  onClick={() => this.handleEdit()}/>
+                :
+                null
+              }
               { this.props.handleDeleteLine ?
                 <TrashIcon
                 style={{
@@ -59,7 +86,8 @@ export default class Tr extends Component {
   render() {
     let cells = this.renderCell()
     return (
-      <div className={this.props.header ? 'table-row header' : 'table-row'}>
+      <div
+      className={this.props.header ? 'table-row header' : 'table-row'}>
         {cells}
       </div>
     )
