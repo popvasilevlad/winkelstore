@@ -5,21 +5,27 @@ import ProductsTable from '../../components/table'
 import { REQUEST_URL } from '../../../intro/utils/constants'
 import { Data } from 'react-chunky'
 import { promiseRequest } from '../../../intro/utils'
+import Input from '../../../intro/components/input'
 
 export default class ProductsScreen extends Component {
   constructor() {
     super()
+
     this.state = {
       ...this.state,
       addFormOpened: false,
       products: [],
       selectedAll: false,
       selections: [],
-      loadingMessage: 'Products are loading...'
+      loadingMessage: 'Products are loading...',
+      query: ''
     }
     this.getUserData()
   }
 
+  queryTiping = e => {
+    this.getProducts(e.target.value);
+  }
 
   getUserData = () => {
     Data.Cache.retrieveCachedItem('userData')
@@ -46,8 +52,8 @@ export default class ProductsScreen extends Component {
     this.getProducts()
   }
 
-  getProducts() {
-    promiseRequest('GET', REQUEST_URL.get_products + '?business_id=' + this.state.data.business_id )
+  getProducts(q = '') {
+    promiseRequest('GET', REQUEST_URL.get_products + '?business_id=' + this.state.data.business_id + '&q=' + q )
       .then( res => this.handleGetRequest(res))
       .catch( err => {
         this.setState({
@@ -188,6 +194,30 @@ export default class ProductsScreen extends Component {
           }
         </div>
         <div className="white-card">
+          <div
+          style={{
+            display:'flex',
+            justifyContent:'space-between'
+          }}>
+            <Input
+              type="text"
+              onChangeHandler={ this.queryTiping }
+              placeholder="Search"
+              holderStyle={{
+                flexBasis:'40%',
+                marginTop: 0
+              }}
+            />
+            { this.state.products.length ? 
+                <button
+                className="highlight-btn btn"
+                onClick={this.deleteSelections}
+                style={{height:'40px', margin: '10px 0'}}>
+                  DELETE SELECTIONS
+                </button>
+              : null
+            }
+          </div>
         {
           this.state.loadingMessage.length ?
           <div
@@ -198,15 +228,6 @@ export default class ProductsScreen extends Component {
           }}>{this.state.loadingMessage}</div>
           :
           <div>
-            <div
-            style={{textAlign:'right'}}>
-              <button
-              className="highlight-btn btn"
-              onClick={this.deleteSelections}
-              style={{height:'40px', margin: '0 0 10px 0'}}>
-                DELETE SELECTIONS
-              </button>
-            </div>
             <ProductsTable
             columns={columns}
             data={this.state.products}
