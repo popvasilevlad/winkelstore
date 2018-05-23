@@ -10,7 +10,12 @@ export default class Input extends PureComponent {
   render() {
     return (
         <div className="input-holder" style={this.props.holderStyle}>
-          <div>{this.props.description}</div>
+          {
+            this.props.description ?
+              <div>{this.props.description}</div>
+              :
+              null
+          }
           <input
               value={this.state.value}
               placeholder={this.state.placeholder}

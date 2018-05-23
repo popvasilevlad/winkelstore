@@ -72,8 +72,13 @@ export default class ProductsScreen extends PureComponent {
     }
   }
 
-  handleEdit = data => {
-    console.log('acici ', data)
+  handleEdit = changes => {
+    console.log('changes = ', changes)
+    promiseRequest('POST', REQUEST_URL.edit_product, changes)
+      .then( res => {
+        res.success ? this.getProducts() : console.log('Error')
+      })
+      .catch( err => console.log('err = ', err))
   }
 
   handleDelete = data => {

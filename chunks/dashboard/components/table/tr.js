@@ -3,6 +3,7 @@ import TrashIcon from 'react-icons/lib/fa/trash'
 import PencilIcon from 'react-icons/lib/fa/pencil'
 import CheckIcon from 'react-icons/lib/fa/check'
 import CloseIcon from 'react-icons/lib/fa/ban'
+import Input from '../../../intro/components/input'
 
 export default class Tr extends Component {
   constructor(props) {
@@ -10,7 +11,9 @@ export default class Tr extends Component {
     this.state = {
       ...this.state,
       editMode: false,
-      data: props.data
+      data: props.data,
+      editValues: {},
+      changes: []
     }
   }
 
@@ -20,6 +23,23 @@ export default class Tr extends Component {
       this.props.handleSelectionsClick(lineId, isChecked)
   }
 
+  handleInputChange = e => {
+    let changes = this.state.changes;
+    let index = changes.findIndex( el => {
+      return Object.keys(el)[0] === e.target.name
+    })
+
+    if (index > -1) {
+      changes[e.target.name] = e.target.value
+    } 
+    else {
+      changes.push({[e.target.name]: e.target.value})
+    }
+    this.setState({
+      changes: changes
+    })
+  }
+
   handleEdit = () => {
     this.setState({
       editMode: true
@@ -27,7 +47,7 @@ export default class Tr extends Component {
   }
 
   submitEdit = () => {
-    this.props.handleEditLine(this.state.data)
+    this.props.handleEditLine(this.state.changes)
     this.setState({
       editMode: false
     })
@@ -36,12 +56,6 @@ export default class Tr extends Component {
   cancelEdit = () => {
     this.setState({
       editMode: false
-    })
-  }
-
-  handleInputChange = e => {
-    this.setState({
-        [e.target.name] : e.target.value
     })
   }
 
@@ -55,7 +69,15 @@ export default class Tr extends Component {
       let checkbox = this.props.header ? this.props.selectedAll : this.props.data.checked
       cells.push(
         <div
-        style={{flexBasis: width}}
+        style={
+          this.state.editMode ?
+          {
+            backgroundColor: '#afce96',
+            flexBasis: width
+          }
+          :
+          {flexBasis: width}
+        }
         key={key}>
           {column.header !== 'Actions' ?
             column.key === 'checkbox' ?
@@ -66,14 +88,10 @@ export default class Tr extends Component {
               :
               this.state.editMode ? 
               <input
-                value={text}
-                name={this.props.columns[key].key}
-                style={{
-                  height: '30px',
-                  padding: '0 10px',
-                  borderRadius: '3px'
-                }}
-                onChange={ e => {this.handleInputChange}}
+              placeholder = {text}
+              name={this.props.columns[key].key}
+              style={{padding: '10px'}}
+              onChange={ e => {this.handleInputChange(e)}}
               />
               :
               text
