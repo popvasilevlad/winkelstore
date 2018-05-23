@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PlusCircle from 'react-icons/lib/fa/plus-circle'
 import ProductForm from '../../components/product-form'
 import ProductsTable from '../../components/table'
@@ -6,7 +6,7 @@ import { REQUEST_URL } from '../../../intro/utils/constants'
 import { Data } from 'react-chunky'
 import { promiseRequest } from '../../../intro/utils'
 
-export default class ProductsScreen extends PureComponent {
+export default class ProductsScreen extends Component {
   constructor() {
     super()
     this.state = {
@@ -72,11 +72,20 @@ export default class ProductsScreen extends PureComponent {
     }
   }
 
-  handleEdit = changes => {
-    console.log('changes = ', changes)
-    promiseRequest('POST', REQUEST_URL.edit_product, changes)
+  handleEdit = (changes, id, view) => {
+    let data = {}
+    data.changes = changes
+    data.id = id
+
+    promiseRequest('POST', REQUEST_URL.edit_product, data)
       .then( res => {
-        res.success ? this.getProducts() : console.log('Error')
+        if (res.success) {
+          view.cancelEdit();
+          this.getProducts()
+        } 
+        else {
+          alert(res.message)
+        } 
       })
       .catch( err => console.log('err = ', err))
   }

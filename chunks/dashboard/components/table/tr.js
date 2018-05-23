@@ -26,14 +26,19 @@ export default class Tr extends Component {
   handleInputChange = e => {
     let changes = this.state.changes;
     let index = changes.findIndex( el => {
-      return Object.keys(el)[0] === e.target.name
+      return el.name === e.target.name
     })
-
     if (index > -1) {
-      changes[e.target.name] = e.target.value
+      let change = {}
+      change.name = e.target.name
+      change.value = e.target.value
+      changes[index] = change
     } 
     else {
-      changes.push({[e.target.name]: e.target.value})
+      changes.push({
+        name: e.target.name,
+        value: e.target.value
+      })
     }
     this.setState({
       changes: changes
@@ -47,9 +52,11 @@ export default class Tr extends Component {
   }
 
   submitEdit = () => {
-    this.props.handleEditLine(this.state.changes)
+    if (!this.state.changes.length) return this.cancelEdit();
+
+    this.props.handleEditLine(this.state.changes, this.props.data.id, this)
     this.setState({
-      editMode: false
+      changes: ''
     })
   }
 
