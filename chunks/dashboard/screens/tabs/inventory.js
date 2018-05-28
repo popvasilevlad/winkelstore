@@ -19,7 +19,8 @@ export default class InventoryScreen extends Component {
       products: [],
       selectedAll: false,
       selections: [],
-      reportGenerated: false
+      reportGenerated: false,
+      reportExceptions: []
     }
     this.getUserData()
   }
@@ -90,9 +91,16 @@ export default class InventoryScreen extends Component {
      promiseRequest('POST', REQUEST_URL.add_accounting_stock, data)
       .then( res => {
         if (res.success) {
+          let exceptions = []
+          if (res.exceptions) {
+            res.exceptions.map( item => {
+              exceptions.push(<div key={item}>* {item}</div>)
+            })
+          }
           this.setState({
-            reportGenerated: true
-          })  
+            reportGenerated: true,
+            reportExceptions:exceptions
+          })
           this.getProducts()
         } 
          console.log('Error. Check response')
@@ -238,7 +246,7 @@ export default class InventoryScreen extends Component {
                 <button
                 className="highlight-btn btn"
                 style={{height:'40px', margin: '0 10px 10px 0'}}>
-                  GENERATE RAPORT
+                  GENERATE REPORT
                 </button>
               </ReactFileReader>
             </div>
@@ -257,10 +265,10 @@ export default class InventoryScreen extends Component {
                 handleSelectionsClick={this.handleSelectionsClick}
                 selectedAll={this.state.selectedAll}
                 reportGenerated={true} />
-                
             }
           </div>
         }
+        {this.state.reportExceptions}
         </div>
       </div>
     )
