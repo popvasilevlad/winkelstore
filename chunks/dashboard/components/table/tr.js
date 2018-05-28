@@ -77,13 +77,19 @@ export default class Tr extends Component {
       cells.push(
         <div
         style={
-          this.state.editMode ?
-          {
-            backgroundColor: '#afce96',
-            flexBasis: width
-          }
-          :
-          {flexBasis: width}
+          text !== 'Differences' & column.key === 'differences' && parseInt(text) !== 0 ?
+            {
+              color: 'red',
+              flexBasis: width
+            }
+            :
+            this.state.editMode ?
+            {
+              backgroundColor: '#afce96',
+              flexBasis: width
+            }
+            :
+            {flexBasis: width}
         }
         key={key}>
           {column.header !== 'Actions' ?

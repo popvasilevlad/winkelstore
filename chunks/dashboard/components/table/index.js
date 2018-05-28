@@ -18,6 +18,7 @@ export default class Table extends Component {
         handleDeleteLine={this.props.handleDelete}
         handleEditLine={this.props.handleEdit}
         handleSelectionsClick={this.props.handleSelectionsClick}
+        reportGenerated={this.props.reportGenerated}
         />
       )
     }

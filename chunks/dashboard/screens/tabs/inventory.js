@@ -8,7 +8,6 @@ import InventoryTable from '../../components/table'
 import $ from 'jquery'
 import ReactFileReader from 'react-file-reader';
 import XLSX from 'xlsx';
-// import xls_json from "xls-to-json";
 
 export default class InventoryScreen extends Component {
   constructor() {
@@ -19,7 +18,8 @@ export default class InventoryScreen extends Component {
       loadingMessage: true,
       products: [],
       selectedAll: false,
-      selections: []
+      selections: [],
+      reportGenerated: false
     }
     this.getUserData()
   }
@@ -78,7 +78,26 @@ export default class InventoryScreen extends Component {
     let attachement = files.base64.split(',')[1];
     let convertedFile = XLSX.read(attachement.replace(/_/g, "/").replace(/-/g, "+"), {type:'base64'})
     let convertedArray = XLSX.utils.sheet_to_json(convertedFile.Sheets.Sheet1)
-    console.log('conb', convertedArray)
+    this.addAccountingReport(convertedArray);
+    
+  }
+
+  addAccountingReport(param) {
+    let data = {
+      business_id: this.state.data.business_id,
+      products: param
+    }
+     promiseRequest('POST', REQUEST_URL.add_accounting_stock, data)
+      .then( res => {
+        if (res.success) {
+          this.setState({
+            reportGenerated: true
+          })  
+          this.getProducts()
+        } 
+         console.log('Error. Check response')
+      })
+      .catch( err => console.log('err = ', err))
   }
 
   handleDelete = data => {
@@ -144,17 +163,31 @@ export default class InventoryScreen extends Component {
         header: 'Observations',
         size: '40%',
         key: 'observations'
-      },
+      },      
       {
-        header: 'Quantity',
+        header: 'Inserted stock',
         size: '10%',
         key: 'quantity'
-      },
+      },      
       {
         header: 'Actions',
         size: '10%',
       }
     ]
+    const columns2 = columns.concat(
+      [{
+        header: 'File stock',
+        size: '5%',
+        key: 'accounting_quantity'
+      },
+      {
+        header: 'Differences',
+        size: '5%',
+        key: 'differences',
+      }]
+    )
+    columns2.splice(5,1)
+
     return (
       <div>
         <div
@@ -194,7 +227,7 @@ export default class InventoryScreen extends Component {
           :
           <div>
             <div
-            style={{textAlign:'right'}}>
+            style={{textAlign:'right', display: 'flex', flexDirection: 'row-reverse'}}>
               <button
               className="highlight-btn btn"
               onClick={this.deleteSelections}
@@ -202,15 +235,30 @@ export default class InventoryScreen extends Component {
                 DELETE SELECTIONS
               </button>
               <ReactFileReader fileTypes={[".xlsx"]} base64={true} multipleFiles={false} handleFiles={this.handleFiles}>
-                <button className='btn'>Upload</button>
+                <button
+                className="highlight-btn btn"
+                style={{height:'40px', margin: '0 10px 10px 0'}}>
+                  GENERATE RAPORT
+                </button>
               </ReactFileReader>
             </div>
-            <InventoryTable
-            columns={columns}
-            data={this.state.products}
-            handleDelete={this.handleDelete}
-            handleSelectionsClick={this.handleSelectionsClick}
-            selectedAll={this.state.selectedAll} />
+            {
+              this.state.reportGenerated ? 
+                <InventoryTable
+                columns={columns2}
+                data={this.state.products}
+                handleSelectionsClick={this.handleSelectionsClick}
+                selectedAll={this.state.selectedAll} />
+                :
+                <InventoryTable
+                columns={columns}
+                data={this.state.products}
+                handleDelete={this.handleDelete}
+                handleSelectionsClick={this.handleSelectionsClick}
+                selectedAll={this.state.selectedAll}
+                reportGenerated={true} />
+                
+            }
           </div>
         }
         </div>
