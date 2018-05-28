@@ -6,6 +6,9 @@ import { REQUEST_URL } from '../../../intro/utils/constants'
 import { promiseRequest } from '../../../intro/utils'
 import InventoryTable from '../../components/table'
 import $ from 'jquery'
+import ReactFileReader from 'react-file-reader';
+import XLSX from 'xlsx';
+// import xls_json from "xls-to-json";
 
 export default class InventoryScreen extends Component {
   constructor() {
@@ -18,7 +21,6 @@ export default class InventoryScreen extends Component {
       selectedAll: false,
       selections: []
     }
-    // }
     this.getUserData()
   }
 
@@ -70,6 +72,13 @@ export default class InventoryScreen extends Component {
         selectedAll: false
       })
     }
+  }
+
+  handleFiles = (files) => {
+    let attachement = files.base64.split(',')[1];
+    let convertedFile = XLSX.read(attachement.replace(/_/g, "/").replace(/-/g, "+"), {type:'base64'})
+    let convertedArray = XLSX.utils.sheet_to_json(convertedFile.Sheets.Sheet1)
+    console.log('conb', convertedArray)
   }
 
   handleDelete = data => {
@@ -192,6 +201,9 @@ export default class InventoryScreen extends Component {
               style={{height:'40px', margin: '0 0 10px 0'}}>
                 DELETE SELECTIONS
               </button>
+              <ReactFileReader fileTypes={[".xlsx"]} base64={true} multipleFiles={false} handleFiles={this.handleFiles}>
+                <button className='btn'>Upload</button>
+              </ReactFileReader>
             </div>
             <InventoryTable
             columns={columns}
