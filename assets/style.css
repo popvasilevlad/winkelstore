@@ -26,6 +26,20 @@ body {
   padding: 20px 0;
 }
 
+.profile-line {
+  margin: 20px 0;
+}
+.white-card.profile-card {
+  margin: 20px 300px;
+}
+.btn.profile-edit {
+  height:40px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+}
+
 /* Login Section Styling*/
 .login-section {
     background-color: #3d463c;

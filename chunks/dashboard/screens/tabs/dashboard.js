@@ -8,7 +8,7 @@ export default class DashboardScreen extends PureComponent {
       ...this.state,
       loading: true
     }
-    this.getUserData();
+    this.getUserData()
   }
 
   getUserData = () => {
