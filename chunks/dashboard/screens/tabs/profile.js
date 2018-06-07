@@ -13,8 +13,13 @@ export default class ProfileScreen extends Component {
       profile_data: 'view',
       errorMessagE_profile_data: '',
       email_section: 'view',
+      first_name: '',
+      last_name: '',
       password: '',
       email: '',
+      password_actual: '',
+      password_new: '',
+      password_new_repeat: '',
       data: ''
     }
     this.getUserData()
@@ -34,6 +39,29 @@ export default class ProfileScreen extends Component {
 
   }
 
+  resetSection(section) {
+    if(section === 'password_section') {
+      this.setState({
+        password_actual: '',
+        password_new: '',
+        password_new_repeat: ''
+      })
+    }
+
+    if(section === 'personal_data') {
+      this.setState({
+        first_name: '',
+        last_name: ''
+      })
+    }
+
+    if(section === 'email_section') {
+      this.setState({
+        email: ''
+      })
+    }
+  }
+
   toggleEdit = e => {
     let section = e.target.value
     let mode = this.state[section] === 'edit' ? 'view' : 'edit'
@@ -42,6 +70,7 @@ export default class ProfileScreen extends Component {
       [section]: mode,
       [`errorMessage_${section}`]: ''
     })
+    this.resetSection(section)
   }
 
   submitChanges = e => {
@@ -53,15 +82,23 @@ export default class ProfileScreen extends Component {
     let section = e.target.value;
     promiseRequest('POST', REQUEST_URL.change_user_data, obj)
       .then( res => {
-        this.setState({
-          [section]: 'view',
-          [`errorMessage_${section}`]: ''
-        })
-        Data.Cache.cacheItem('userData', res.data)
-        .then( () => {
-          this.getUserData()
-        })
-        .catch((err) => {})
+        if(res && res.success === 1) {
+          this.setState({
+            [section]: 'view',
+            [`errorMessage_${section}`]: ''
+          })
+          this.resetSection(section);
+          Data.Cache.cacheItem('userData', res.data)
+          .then( () => {
+            this.getUserData()
+          })
+          .catch(() => {})
+        }
+        else {
+          this.setState({
+            [`errorMessage_${section}`]: res.message
+          })
+        }
       })
       .catch( err => {
         this.setState({
@@ -217,26 +254,29 @@ export default class ProfileScreen extends Component {
             {
               this.state.password_section !== 'edit' ?
               <div>
-                <div className="profile-line">Passwrod: <strong>********</strong></div>
+                <div className="profile-line">Password: <strong>********</strong></div>
               </div>
               :
               <div>
                   <Input
                   placeholder="Actual password"
-                  name="actual-password"
+                  name="password_actual"
                   description="Actual password"
+                  type="password"
                   onChangeHandler = {this.handleChange}
                   />
                   <Input
                   placeholder="New password"
-                  name="New-password"
+                  name="password_new"
                   description="New password"
+                  type="password"
                   onChangeHandler = {this.handleChange}
                   />
                   <Input
                   placeholder="Repeat new password"
-                  name="repeat-new-password"
+                  name="password_new_repeat"
                   description="Repeat new password"
+                  type="password"
                   onChangeHandler = {this.handleChange}
                   />
               </div>
@@ -260,7 +300,7 @@ export default class ProfileScreen extends Component {
               this.state.password_section !== 'edit' ?
               <button
               value="password_section"
-              onClick={this.submitChanges}
+              onClick={e => {this.toggleEdit(e)}}
               className="highlight-btn btn profile-edit"
               >
               EDIT
@@ -269,7 +309,7 @@ export default class ProfileScreen extends Component {
               <div>
                 <button
                 value="password_section"
-                onClick={e => {this.toggleEdit(e)}}
+                onClick={this.submitChanges}
                 className="highlight-btn btn profile-edit"
                 >
                 SAVE
