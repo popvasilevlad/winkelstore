@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Data } from 'react-chunky'
 import Input from '../../../intro/components/input'
 import { promiseRequest } from '../../../intro/utils'
 import { REQUEST_URL } from '../../../intro/utils/constants'
 
-export default class ProfileScreen extends PureComponent {
+export default class ProfileScreen extends Component {
   constructor() {
     super()
     this.state = {
@@ -14,7 +14,8 @@ export default class ProfileScreen extends PureComponent {
       errorMessagE_profile_data: '',
       email_section: 'view',
       password: '',
-      email: ''
+      email: '',
+      data: ''
     }
     this.getUserData()
   }
@@ -46,15 +47,21 @@ export default class ProfileScreen extends PureComponent {
   submitPersonalData = e => {
     let obj = {
       ...this.state,
-      section: e.target.value
+      section: e.target.value,
+      id: this.state.data.id
     }
     let section = e.target.value;
     promiseRequest('POST', REQUEST_URL.change_user_data, obj)
-      .then( e => {
+      .then( res => {
         this.setState({
           [section]: 'view',
           [`errorMessage_${section}`]: ''
         })
+        Data.Cache.cacheItem('userData', res.data)
+        .then( () => {
+          this.getUserData()
+        })
+        .catch((err) => {})
       })
       .catch( err => {
         this.setState({
@@ -86,13 +93,13 @@ export default class ProfileScreen extends PureComponent {
               :
               <div>
                   <Input
-                  name="firstname"
+                  name="first_name"
                   description="Firstname"
                   onChangeHandler = {this.handleChange}
                   placeholder={this.state.data.first_name}
                   />
                   <Input
-                  name="lastname"
+                  name="last_name"
                   description="Lastname"
                   onChangeHandler = {this.handleChange}
                   placeholder={this.state.data.last_name}
