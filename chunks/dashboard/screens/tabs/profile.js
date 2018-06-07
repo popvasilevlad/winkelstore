@@ -44,7 +44,7 @@ export default class ProfileScreen extends Component {
     })
   }
 
-  submitPersonalData = e => {
+  submitChanges = e => {
     let obj = {
       ...this.state,
       section: e.target.value,
@@ -134,7 +134,7 @@ export default class ProfileScreen extends Component {
               <div>
                 <button
                 value="profile_data"
-                onClick={this.submitPersonalData}
+                onClick={this.submitChanges}
                 className="highlight-btn btn profile-edit"
                 >
                 SAVE
@@ -161,21 +161,9 @@ export default class ProfileScreen extends Component {
               :
               <div>
                   <Input
-                  placeholder="Current e-mail"
-                  name="email"
-                  description="Current e-mail"
-                  onChangeHandler = {this.handleChange}
-                  />
-                  <Input
                   placeholder="New email"
-                  name="New-email"
+                  name="email"
                   description="New email"
-                  onChangeHandler = {this.handleChange}
-                  />
-                  <Input
-                  placeholder="Repeat new email"
-                  name="repeat-new-email"
-                  description="Repeat new email"
                   onChangeHandler = {this.handleChange}
                   />
               </div>
@@ -208,7 +196,7 @@ export default class ProfileScreen extends Component {
               <div>
                 <button
                 value="email_section"
-                onClick={e => {this.toggleEdit(e)}}
+                onClick={this.submitChanges}
                 className="highlight-btn btn profile-edit"
                 >
                 SAVE
@@ -272,7 +260,7 @@ export default class ProfileScreen extends Component {
               this.state.password_section !== 'edit' ?
               <button
               value="password_section"
-              onClick={e => {this.toggleEdit(e)}}
+              onClick={this.submitChanges}
               className="highlight-btn btn profile-edit"
               >
               EDIT
