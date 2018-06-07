@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Data } from 'react-chunky'
 import Input from '../../../intro/components/input'
+import { promiseRequest } from '../../../intro/utils'
+import { REQUEST_URL } from '../../../intro/utils/constants'
 
 export default class ProfileScreen extends PureComponent {
   constructor() {
@@ -9,6 +11,7 @@ export default class ProfileScreen extends PureComponent {
       ...this.state,
       loading: true,
       profile_data: 'view',
+      errorMessagE_profile_data: '',
       email_section: 'view',
       password: '',
       email: ''
@@ -35,8 +38,35 @@ export default class ProfileScreen extends PureComponent {
     let mode = this.state[section] === 'edit' ? 'view' : 'edit'
 
     this.setState({
-      [section]: mode
+      [section]: mode,
+      [`errorMessage_${section}`]: ''
     })
+  }
+
+  submitPersonalData = e => {
+    let obj = {
+      ...this.state,
+      section: e.target.value
+    }
+    let section = e.target.value;
+    promiseRequest('POST', REQUEST_URL.change_user_data, obj)
+      .then( e => {
+        this.setState({
+          [section]: 'view',
+          [`errorMessage_${section}`]: ''
+        })
+      })
+      .catch( err => {
+        this.setState({
+          [`errorMessage_${section}`]: 'Error occured'
+        })
+      })
+  }
+
+  handleChange = e => {
+      this.setState({
+          [e.target.name] : e.target.value
+      })
   }
 
   render() {
@@ -56,18 +86,33 @@ export default class ProfileScreen extends PureComponent {
               :
               <div>
                   <Input
-                  placeholder="Firstname"
                   name="firstname"
                   description="Firstname"
                   onChangeHandler = {this.handleChange}
+                  placeholder={this.state.data.first_name}
                   />
                   <Input
-                  placeholder="Lastname"
                   name="lastname"
                   description="Lastname"
                   onChangeHandler = {this.handleChange}
+                  placeholder={this.state.data.last_name}
                   />
               </div>
+            }
+            {
+              this.state.errorMessage_profile_data ?
+              <div
+              className='error-wrapper'
+              style={{
+                color: 'red',
+                textAlign: 'center',
+                margin: '10px 0 20px'
+              }}
+              >
+                {this.state.errorMessage_profile_data}
+              </div>
+              :
+              null
             }
             {
               this.state.profile_data !== 'edit' ?
@@ -82,7 +127,7 @@ export default class ProfileScreen extends PureComponent {
               <div>
                 <button
                 value="profile_data"
-                onClick={e => {this.toggleEdit(e)}}
+                onClick={this.submitPersonalData}
                 className="highlight-btn btn profile-edit"
                 >
                 SAVE
@@ -127,6 +172,21 @@ export default class ProfileScreen extends PureComponent {
                   onChangeHandler = {this.handleChange}
                   />
               </div>
+            }
+            {
+              this.state.errorMessage_email_section ?
+              <div
+              className='error-wrapper'
+              style={{
+                color: 'red',
+                textAlign: 'center',
+                margin: '10px 0 20px'
+              }}
+              >
+                {this.state.errorMessage_email_section}
+              </div>
+              :
+              null
             }
             {
               this.state.email_section !== 'edit' ?
@@ -185,6 +245,21 @@ export default class ProfileScreen extends PureComponent {
                   onChangeHandler = {this.handleChange}
                   />
               </div>
+            }
+            {
+              this.state.errorMessage_password_section ?
+              <div
+              className='error-wrapper'
+              style={{
+                color: 'red',
+                textAlign: 'center',
+                margin: '10px 0 20px'
+              }}
+              >
+                {this.state.errorMessage_password_section}
+              </div>
+              :
+              null
             }
             {
               this.state.password_section !== 'edit' ?

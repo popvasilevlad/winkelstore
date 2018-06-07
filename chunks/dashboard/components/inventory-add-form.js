@@ -25,7 +25,6 @@ export default class InventoryAddForm extends PureComponent {
     promiseRequest('POST', REQUEST_URL.inventory_add, this.state)
       .then( res => this.handleAddRequest(res))
       .catch( err => {
-        console.log(err)
         this.setState({
           errorMessage: 'Error occured'
         })
