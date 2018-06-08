@@ -4,6 +4,8 @@ import { promiseRequest } from '../../../intro/utils'
 import { REQUEST_URL } from '../../../intro/utils/constants'
 import Briefcase from 'react-icons/lib/fa/briefcase'
 import ShoppingCart from 'react-icons/lib/fa/shopping-cart'
+import BarCode from 'react-icons/lib/fa/barcode'
+import ListUl from 'react-icons/lib/fa/list-ul'
 
 export default class DashboardScreen extends PureComponent {
   constructor(props) {
@@ -58,13 +60,18 @@ export default class DashboardScreen extends PureComponent {
       className="white-card profile-card"
       style={{textAlign: 'center'}}
       >
-        Welcome, {this.state.data.first_name} {this.state.data.last_name}!
-        <div>
+        <div
+        style={{ fontSize: '24px'}}
+        >
+          Welcome, {this.state.data.first_name} {this.state.data.last_name}!
+        </div>
+        <div style={{
+          margin: '100px 0'
+        }}>
           <Briefcase
           style={{
             fontSize: '64px',
             color:'#565650',
-            margin: '30px 0 0'
           }}/>
           <div
           style={{
@@ -84,16 +91,54 @@ export default class DashboardScreen extends PureComponent {
           </div>
         </div>
         <div
-        style={{textAlign: 'left'}}>
-          <ShoppingCart
-          style={{
-            fontSize: '24px',
-            color:'#565650',
-            margin: '30px 0 0'
-          }}/>
+        style={{
+          width: '800px',
+          display: 'flex',
+          margin: '50px auto'}}
+        >
           <div
-          style={{display: 'inline-block', verticalAlign: 'bottom', marginLeft:'10px'}}>
-             - {this.state.business_data.products_count} products registered
+          style={{flexBasis: '33%'}}>
+            <ShoppingCart
+            style={{
+              fontSize: '24px',
+              color:'#565650',
+              display: 'block',
+              margin: '30px auto 20px'
+            }}/>
+            <div
+            style={{display: 'inline-block', verticalAlign: 'bottom', marginLeft:'10px'}}>
+             {this.state.business_data.products_count || '0'} products registered
+            </div>
+          </div>
+
+          <div
+          style={{flexBasis: '33%'}}>
+            <ListUl
+            style={{
+              fontSize: '24px',
+              color:'#565650',
+              display: 'block',
+              margin: '30px auto 20px'
+            }}/>
+            <div
+            style={{display: 'inline-block', verticalAlign: 'bottom', marginLeft:'10px'}}>
+             {this.state.business_data.inventory_count || '0'} items added to inventory
+            </div>
+          </div>
+
+          <div
+          style={{flexBasis: '33%'}}>
+            <BarCode
+            style={{
+              fontSize: '24px',
+              color:'#565650',
+              display: 'block',
+              margin: '30px auto 20px'
+            }}/>
+            <div
+            style={{display: 'inline-block', verticalAlign: 'bottom', marginLeft:'10px'}}>
+             {this.state.business_data.inventory_entities_count || '0'} products added to inventory
+            </div>
           </div>
         </div>
       </div>
