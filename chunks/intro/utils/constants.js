@@ -10,5 +10,6 @@ export const REQUEST_URL = {
     get_inventory: 'http://winkelstore.000webhostapp.com/get_inventory.php',
     add_accounting_stock: 'http://winkelstore.000webhostapp.com/add_accounting_stock.php',
     delete_inventory_product: 'http://winkelstore.000webhostapp.com/delete_inventory_product.php',
+    get_business_data: 'http://winkelstore.000webhostapp.com/get_business_data.php',
     change_user_data: 'http://winkelstore.000webhostapp.com/change_user_data.php'
 }
