@@ -9,10 +9,12 @@ export default class ProfileScreen extends Component {
     super()
     this.state = {
       ...this.state,
+      errorMessage_profile_data: '',
       loading: true,
       profile_data: 'view',
-      errorMessagE_profile_data: '',
       email_section: 'view',
+      password_section: 'view',
+      business_Data: 'view',
       first_name: '',
       last_name: '',
       password: '',
@@ -32,11 +34,30 @@ export default class ProfileScreen extends Component {
         data,
         loading: false
       })
+      this.getBusinessData()
     })
     .catch( () => {
         window.location = '/'
     });
+  }
 
+  getBusinessData() {
+    promiseRequest('GET', `${REQUEST_URL.get_business_data}?business_id=${this.state.data.business_id}`)
+      .then( res => {
+        let businessData = res.data;
+        let profileAndBusinessData = {
+          ...this.state.data,
+          ...businessData
+        }
+        this.setState({
+          data: profileAndBusinessData
+        })
+      })
+      .catch( err => {
+        this.setState({
+          errorMessage: 'Error occured'
+        })
+      })
   }
 
   resetSection(section) {
@@ -58,6 +79,13 @@ export default class ProfileScreen extends Component {
     if(section === 'email_section') {
       this.setState({
         email: ''
+      })
+    }
+    if(section === 'business_data') {
+      this.setState({
+        alias: '',
+        address: '',
+        city: ''
       })
     }
   }
@@ -117,34 +145,50 @@ export default class ProfileScreen extends Component {
     if (this.state.loading) return (<div><br/><br/>Loading</div>)
 
     return (
-      <div>
+      <div
+      style={{
+        width: '1000px',
+        display: 'flex',
+        margin: '0 auto'
+      }}>
+        <div
+        style={{
+          flexBasis: '50%'
+        }}>
           <div className="white-card profile-card">
-            <div><strong>Profile data</strong></div>
+            <div><strong>Business data</strong></div>
             <br/>
             {
-              this.state.profile_data !== 'edit' ?
+              this.state.business_data !== 'edit' ?
               <div>
-                <div className="profile-line">Firstname:  {this.state.data.first_name}</div>
-                <div className="profile-line">Lastname:  {this.state.data.last_name}</div>
+              <div className="profile-line">Alias:  {this.state.data.alias}</div>
+              <div className="profile-line">Address:  {this.state.data.address}</div>
+              <div className="profile-line">City:  {this.state.data.city}</div>
               </div>
               :
               <div>
-                  <Input
-                  name="first_name"
-                  description="Firstname"
-                  onChangeHandler = {this.handleChange}
-                  placeholder={this.state.data.first_name}
-                  />
-                  <Input
-                  name="last_name"
-                  description="Lastname"
-                  onChangeHandler = {this.handleChange}
-                  placeholder={this.state.data.last_name}
-                  />
+              <Input
+              name="alias"
+              description="Alias"
+              onChangeHandler = {this.handleChange}
+              placeholder={this.state.data.first_name}
+              />
+              <Input
+              name="address"
+              description="Address"
+              onChangeHandler = {this.handleChange}
+              placeholder={this.state.data.last_name}
+              />
+              <Input
+              name="city"
+              description="City"
+              onChangeHandler = {this.handleChange}
+              placeholder={this.state.data.last_name}
+              />
               </div>
             }
             {
-              this.state.errorMessage_profile_data ?
+              this.state.errorMessage_business_data ?
               <div
               className='error-wrapper'
               style={{
@@ -153,15 +197,15 @@ export default class ProfileScreen extends Component {
                 margin: '10px 0 20px'
               }}
               >
-                {this.state.errorMessage_profile_data}
+              {this.state.errorMessage_business_data}
               </div>
               :
               null
             }
             {
-              this.state.profile_data !== 'edit' ?
+              this.state.business_data !== 'edit' ?
               <button
-              value="profile_data"
+              value="business_data"
               onClick={e => {this.toggleEdit(e)}}
               className="highlight-btn btn profile-edit"
               >
@@ -169,23 +213,22 @@ export default class ProfileScreen extends Component {
               </button>
               :
               <div>
-                <button
-                value="profile_data"
-                onClick={this.submitChanges}
-                className="highlight-btn btn profile-edit"
-                >
-                SAVE
-                </button>
-                <button
-                value="profile_data"
-                onClick={e => {this.toggleEdit(e)}}
-                className="outlined-btn btn profile-edit"
-                >
-                CANCEL
-                </button>
+              <button
+              value="business_data"
+              onClick={this.submitChanges}
+              className="highlight-btn btn profile-edit"
+              >
+              SAVE
+              </button>
+              <button
+              value="business_data"
+              onClick={e => {this.toggleEdit(e)}}
+              className="outlined-btn btn profile-edit"
+              >
+              CANCEL
+              </button>
               </div>
             }
-
           </div>
           <div className="white-card profile-card">
             <div><strong>E-mail</strong></div>
@@ -193,16 +236,16 @@ export default class ProfileScreen extends Component {
             {
               this.state.email_section !== 'edit' ?
               <div>
-                <div className="profile-line">E-mail:  {this.state.data.email}</div>
+              <div className="profile-line">E-mail:  {this.state.data.email}</div>
               </div>
               :
               <div>
-                  <Input
-                  placeholder="New email"
-                  name="email"
-                  description="New email"
-                  onChangeHandler = {this.handleChange}
-                  />
+                <Input
+                placeholder="New email"
+                name="email"
+                description="New email"
+                onChangeHandler = {this.handleChange}
+                />
               </div>
             }
             {
@@ -215,7 +258,7 @@ export default class ProfileScreen extends Component {
                 margin: '10px 0 20px'
               }}
               >
-                {this.state.errorMessage_email_section}
+              {this.state.errorMessage_email_section}
               </div>
               :
               null
@@ -248,37 +291,111 @@ export default class ProfileScreen extends Component {
               </div>
             }
           </div>
+        </div>
+        <div
+        style={{
+          flexBasis: '50%'
+        }}>
+        <div className="white-card profile-card">
+          <div><strong>Profile data</strong></div>
+          <br/>
+          {
+            this.state.profile_data !== 'edit' ?
+            <div>
+              <div className="profile-line">Firstname:  {this.state.data.first_name}</div>
+              <div className="profile-line">Lastname:  {this.state.data.last_name}</div>
+            </div>
+            :
+            <div>
+              <Input
+              name="first_name"
+              description="Firstname"
+              onChangeHandler = {this.handleChange}
+              placeholder={this.state.data.first_name}
+              />
+              <Input
+              name="last_name"
+              description="Lastname"
+              onChangeHandler = {this.handleChange}
+              placeholder={this.state.data.last_name}
+              />
+            </div>
+          }
+          {
+            this.state.errorMessage_profile_data ?
+            <div
+            className='error-wrapper'
+            style={{
+              color: 'red',
+              textAlign: 'center',
+              margin: '10px 0 20px'
+            }}
+            >
+            {this.state.errorMessage_profile_data}
+            </div>
+            :
+            null
+          }
+          {
+            this.state.profile_data !== 'edit' ?
+            <button
+            value="profile_data"
+            onClick={e => {this.toggleEdit(e)}}
+            className="highlight-btn btn profile-edit"
+            >
+            EDIT
+            </button>
+            :
+            <div>
+              <button
+              value="profile_data"
+              onClick={this.submitChanges}
+              className="highlight-btn btn profile-edit"
+              >
+              SAVE
+              </button>
+              <button
+              value="profile_data"
+              onClick={e => {this.toggleEdit(e)}}
+              className="outlined-btn btn profile-edit"
+              >
+              CANCEL
+              </button>
+            </div>
+          }
+        </div>
+
           <div className="white-card profile-card">
             <div><strong>Password</strong></div>
             <br/>
             {
               this.state.password_section !== 'edit' ?
               <div>
-                <div className="profile-line">Password: <strong>********</strong></div>
+              <div className="profile-line">Password: <strong>********</strong></div>
               </div>
               :
               <div>
-                  <Input
-                  placeholder="Actual password"
-                  name="password_actual"
-                  description="Actual password"
-                  type="password"
-                  onChangeHandler = {this.handleChange}
-                  />
-                  <Input
-                  placeholder="New password"
-                  name="password_new"
-                  description="New password"
-                  type="password"
-                  onChangeHandler = {this.handleChange}
-                  />
-                  <Input
-                  placeholder="Repeat new password"
-                  name="password_new_repeat"
-                  description="Repeat new password"
-                  type="password"
-                  onChangeHandler = {this.handleChange}
-                  />
+              <Input
+              placeholder="Actual password"
+              name="password_actual"
+              description="Actual password"
+              type="password"
+              onChangeHandler = {this.handleChange}
+              />
+              <Input
+              placeholder="New password"
+              name="password_new"
+              description="New password"
+              type="password"
+              onChangeHandler = {this.handleChange}
+              />
+              <Input
+              placeholder="Repeat new password"
+              name="password_new_repeat"
+              description="Repeat new password"
+              type="password"
+              onChangeHandler = {this.handleChange}
+              />
               </div>
             }
             {
@@ -291,7 +408,7 @@ export default class ProfileScreen extends Component {
                 margin: '10px 0 20px'
               }}
               >
-                {this.state.errorMessage_password_section}
+              {this.state.errorMessage_password_section}
               </div>
               :
               null
@@ -307,23 +424,24 @@ export default class ProfileScreen extends Component {
               </button>
               :
               <div>
-                <button
-                value="password_section"
-                onClick={this.submitChanges}
-                className="highlight-btn btn profile-edit"
-                >
-                SAVE
-                </button>
-                <button
-                value="password_section"
-                onClick={e => {this.toggleEdit(e)}}
-                className="outlined-btn btn profile-edit"
-                >
-                CANCEL
-                </button>
-              </div>
-            }
+              <button
+              value="password_section"
+              onClick={this.submitChanges}
+              className="highlight-btn btn profile-edit"
+              >
+              SAVE
+              </button>
+              <button
+              value="password_section"
+              onClick={e => {this.toggleEdit(e)}}
+              className="outlined-btn btn profile-edit"
+              >
+              CANCEL
+              </button>
+            </div>
+          }
           </div>
+        </div>
       </div>
     )
   }
