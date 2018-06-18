@@ -32,10 +32,10 @@ export default class Menu extends PureComponent {
     return (
       <div className="dashboard-menu">
         <MenuItem
-              text="dashboard"
-              activeTab={this.state.activeTab}
-              handleClick={this.handleClick}
-            />
+          text="dashboard"
+          activeTab={this.state.activeTab}
+          handleClick={this.handleClick}
+        />
         <MenuItem
           text="products"
           activeTab={this.state.activeTab}
@@ -45,20 +45,21 @@ export default class Menu extends PureComponent {
           text="inventory"
           activeTab={this.state.activeTab}
           handleClick={this.handleClick}
+        />
+        <div
+        style={{marginLeft:'auto'}}
+        >
+          <MenuItem
+          text="profile"
+          activeTab={this.state.activeTab}
+          handleClick={this.handleClick}
           />
-          <div
-          style={{marginLeft:'auto'}}>
-            <MenuItem
-            text="profile"
-            activeTab={this.state.activeTab}
-            handleClick={this.handleClick}
-            />
-            <MenuItem
-            text="Log out"
-            activeTab={this.state.activeTab}
-            handleClick={this.signOut}
-            />
-          </div>
+          <MenuItem
+          text="Log out"
+          activeTab={this.state.activeTab}
+          handleClick={this.signOut}
+          />
+        </div>
       </div>
     )
   }
